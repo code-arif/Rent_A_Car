@@ -1,0 +1,70 @@
+<script setup>
+import GuestLayout from '../../../Layouts/GuestLayout.vue';
+import { Head, Link } from '@inertiajs/vue3';
+</script>
+
+<template>
+
+    <Head>
+        <title>Car Rent || Login</title>
+    </Head>
+    <GuestLayout>
+        <!-- inner-apge-banner start -->
+        <section class="inner-page-banner bg_img overlay-3"
+            style="background-image: url('https://images.unsplash.com/photo-1613214149922-f1809c99b414?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D');">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <h2 class="page-title">login</h2>
+                        <ol class="page-list">
+                            <li>
+                                <Link href="route('show.home')"><i class="fa fa-home"></i> Home</Link>
+                            </li>
+                            <li>login</li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- inner-apge-banner end -->
+
+        <!-- login-section start -->
+        <section class="login-section pt-120 pb-120">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="login-block text-center">
+                            <div class="login-block-inner">
+                                <h3 class="title">login your account </h3>
+                                <form class="login-form">
+                                    <div class="frm-group">
+                                        <input type="text" name="f-name" id="f-name" placeholder="Your Name">
+                                    </div>
+                                    <div class="frm-group">
+                                        <input type="password" name="pass" id="pass" placeholder="Your Password">
+                                    </div>
+                                    <div class="frm-group">
+                                        <input type="submit" value="login account">
+                                    </div>
+                                    <div class="frm-group text-center">
+                                        <span class="or">or</span>
+                                    </div>
+                                    <div class="frm-group text-center">
+                                        <a href="" class="google"> Login with googles</a>
+                                    </div>
+                                </form>
+                                <p>
+                                    <Link :href="route('show.user.registration')">Haven't your any account in here?</Link>
+                                    <a href="#0">Forget password?</a>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- login-section end -->
+    </GuestLayout>
+</template>
+
+<style scoped></style>
