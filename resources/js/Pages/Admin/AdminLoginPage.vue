@@ -57,9 +57,6 @@ function adminLogin() {
                             <label for="password">Password</label>
                             <input type="password" class="form-control" id="password" v-model="form.password">
                         </div>
-                        <div class="d-flex align-items-center justify-content-between mb-4">
-                            <Link href="">Forgot Password</Link>
-                        </div>
                         <button type="submit" class="cmn-btn w-100 mb-4">Sign In</button>
                     </form>
                 </div>

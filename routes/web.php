@@ -12,6 +12,8 @@ use App\Http\Controllers\Admin\AdminAuthController;
 use App\Http\Controllers\Frontend\RentalController;
 use App\Http\Controllers\Frontend\ContactController;
 use App\Http\Controllers\Admin\AdminDashboardController;
+use App\Http\Controllers\Admin\CarManageController;
+use App\Http\Controllers\Admin\CustomerController;
 use App\Http\Controllers\Frontend\UserDashboardController;
 use App\Http\Middleware\UserAuthMiddleware;
 
@@ -24,9 +26,25 @@ Route::get('/admin/login', [AdminAuthController::class, 'ShowAdminLogin'])->name
 Route::post('/admin/login', [AdminAuthController::class, 'AdminLogin'])->name('admin.login');
 
 //=================================Admin Dashboard route =================================//
-Route::group(['prefix' => 'admin', 'middleware' => AdminAuthMiddleware::class], function () {
-    Route::get('/dashboard', [AdminDashboardController::class, 'showAdminDashboard'])->name('show.admin.dashboard');
-    Route::get('/logout', [AdminAuthController::class, 'AdminLogout'])->name('admin.logout');
+Route::group(['middleware' => AdminAuthMiddleware::class], function () {
+    Route::get('admin/dashboard', [AdminDashboardController::class, 'showAdminDashboard'])->name('show.admin.dashboard');
+    Route::get('admin/logout', [AdminAuthController::class, 'AdminLogout'])->name('admin.logout');
+
+    //====================car management=====================//
+    Route::group(['prefix' => 'car'], function () {
+        Route::get('/list', [CarManageController::class, 'showCarList'])->name('show.car.list');
+        Route::get('/save/{id?}', [CarManageController::class, 'showCarSave'])->name('show.car.save');
+        Route::post('/store', [CarManageController::class, 'carStore'])->name('store.car');
+        Route::post('/update/{id}', [CarManageController::class, 'updateCar'])->name('update.car');
+        Route::post('/delete/{id}', [CarManageController::class, 'deleteCar'])->name('delete.car');
+        Route::post('/status-change/{id}', [CarManageController::class, 'changeCarStatus'])->name('change.car.status');
+    });
+
+    //====================customer management=====================//
+    Route::group(['prefix' => 'customer'], function () {
+        Route::get('/list', [CustomerController::class, 'showCustomerList'])->name('show.customer.list');
+        Route::post('/delete/{id}', [CarManageController::class, 'deleteCustomer'])->name('delete.customer');
+    });
 });
 
 /*================================
@@ -55,4 +73,6 @@ Route::get('/contact', [ContactController::class, 'contact'])->name('show.contac
 Route::get('/car-details', [RentalController::class, 'showCarDetails'])->name('show.car.details');
 
 //==========================User Dashboard===========================//
-Route::get('/user/dashboard', [UserDashboardController::class, 'showUserDashboard'])->name('show.user.dashboard')->middleware(UserAuthMiddleware::class);
+Route::get('/user/dashboard', [UserDashboardController::class, 'showUserDashboard'])
+    ->name('show.user.dashboard')
+    ->middleware(UserAuthMiddleware::class);

@@ -25,16 +25,16 @@ const authUser = usePage().props.auth.user;
 
 
             <div class="navbar-nav w-100">
-                <a href="" class="nav-item nav-link active"><i class="fa fa fa-laptop"
-                        style="margin-right: 5px;"></i>Dashboard</a>
+                <Link :href="route('show.admin.dashboard')" class="nav-item nav-link" :class="{ 'active': $page.url === '/admin/dashboard'}"><i class="fa fa fa-laptop"
+                        style="margin-right: 5px;"></i>Dashboard</Link>
             </div>
             <div class="navbar-nav w-100">
-                <a href="" class="nav-item nav-link"><i class="fa fa fa-car"
-                        style="margin-right: 5px;"></i>Car</a>
+                <Link :href="route('show.car.list')" class="nav-item nav-link" :class="{ 'active': $page.url === '/car/list' }"><i class="fa fa fa-car"
+                        style="margin-right: 5px;"></i>Car</Link>
             </div>
             <div class="navbar-nav w-100">
-                <a href="" class="nav-item nav-link"><i class="fa fa fa-users"
-                        style="margin-right: 5px;"></i>Customer</a>
+                <Link :href="route('show.customer.list')" class="nav-item nav-link" :class="{'active': $page.url === '/customer/list'}"><i class="fa fa fa-users"
+                        style="margin-right: 5px;"></i>Customer</Link>
             </div>
             <div class="navbar-nav w-100">
                 <a href="" class="nav-item nav-link"><i class="fa fa fa-key"
