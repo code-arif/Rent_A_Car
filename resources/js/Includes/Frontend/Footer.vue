@@ -11,9 +11,9 @@ import { Link } from '@inertiajs/vue3';
                     <div class="col-lg-4 col-sm-8">
                         <div class="footer-widget">
                             <div class="">
-                                <Link class="site-logo site-title mb-3" :href="route('show.home')"
-                                    style="text-decoration: none; font-size: 30px; color: red; border:1px solid #da1c36; padding: 3px 8px; ">
-                                CAR RENT </Link>
+                                <Link href="" class="navbar-brand mx-4 mb-3">
+                                <h3 class="text-light"><i class="fa fa-car" style="margin-right: 5px;"></i>Car Rent</h3>
+                                </Link>
                                 <p>Lorem ipsum dolor sit amet, congue placeranec. Leo faucibus sed eleifend bibendum n
                                     vehicula nulla mauris nulla ipsum neque sed. Gravida egestas fermentum urna, velit
                                     sed. </p>

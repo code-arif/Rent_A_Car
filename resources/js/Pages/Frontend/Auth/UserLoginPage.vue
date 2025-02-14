@@ -1,6 +1,36 @@
 <script setup>
 import GuestLayout from '../../../Layouts/GuestLayout.vue';
-import { Head, Link } from '@inertiajs/vue3';
+
+import { Link, Head, usePage, useForm } from '@inertiajs/vue3';
+const list = usePage();
+
+const form = useForm({
+    email: '',
+    password: '',
+});
+
+// Admin login function
+function UserLogin() {
+    form.post(route('user.login'), {
+        onSuccess: () => {
+            if (list.props.flash.status === true) {
+                successToast(list.props.flash.message);
+                form.reset();
+            } else {
+                errorToast(list.props.flash.message);
+            }
+        },
+        onError: (errors) => {
+            if (errors.email) {
+                errorToast(errors.email);
+            } else if (errors.password) {
+                errorToast(errors.password);
+            } else {
+                errorToast(list.props.flash.message);
+            }
+        }
+    });
+}
 </script>
 
 <template>
@@ -36,15 +66,15 @@ import { Head, Link } from '@inertiajs/vue3';
                         <div class="login-block text-center">
                             <div class="login-block-inner">
                                 <h3 class="title">login your account </h3>
-                                <form class="login-form">
+                                <form class="login-form" @submit.prevent="UserLogin()">
                                     <div class="frm-group">
-                                        <input type="text" name="f-name" id="f-name" placeholder="Your Name">
+                                        <input type="email" placeholder="Enter your email" v-model="form.email">
                                     </div>
                                     <div class="frm-group">
-                                        <input type="password" name="pass" id="pass" placeholder="Your Password">
+                                        <input type="password" placeholder="Your Password" v-model="form.password">
                                     </div>
                                     <div class="frm-group">
-                                        <input type="submit" value="login account">
+                                       <button type="submit" class="cmn-btn w-100">Submit</button>
                                     </div>
                                     <div class="frm-group text-center">
                                         <span class="or">or</span>

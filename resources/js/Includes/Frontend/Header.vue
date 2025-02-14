@@ -1,5 +1,6 @@
 <script setup>
-import { Link } from '@inertiajs/vue3';
+import { Link, usePage } from '@inertiajs/vue3';
+const authUser = usePage().props.authCustomer.customer;
 </script>
 
 <template>
@@ -7,18 +8,29 @@ import { Link } from '@inertiajs/vue3';
         <div class="header-bottom">
             <div class="container">
                 <nav class="navbar navbar-expand-lg p-0">
-                    <Link class="site-logo site-title" :href="route('show.home')" style="text-decoration: none; font-size: 30px; color: red; border:1px solid #da1c36; padding: 3px 8px; "> CAR RENT </Link>
+                    <Link href="" class="navbar-brand">
+                    <h3 class="text-light"><i class="fa fa-car" style="margin-right: 5px;"></i>Car Rent</h3>
+                    </Link>
 
                     <div class="collapse navbar-collapse">
                         <ul class="navbar-nav main-menu m-auto">
-                            <li><Link :href="route('show.home')">Home</Link> </li>
-                            <li><Link :href="route('car.page')">Cars</Link> </li>
-                            <li><Link :href="route('show.about')">About</Link> </li>
-                            <li><Link :href="route('show.contact')">contact us</Link></li>
+                            <li>
+                                <Link :href="route('show.home')">Home</Link>
+                            </li>
+                            <li>
+                                <Link :href="route('car.page')">Cars</Link>
+                            </li>
+                            <li>
+                                <Link :href="route('show.about')">About</Link>
+                            </li>
+                            <li>
+                                <Link :href="route('show.contact')">contact us</Link>
+                            </li>
                         </ul>
                         <div class="header-action d-flex align-items-center justify-content-between">
-                            <Link href="" class="cmn-btn uppercase d-none">MAKE YOUR RESERVATION</Link>
-                            <Link :href="route('show.user.login')" class="cmn-btn uppercase">LOG IN</Link>
+                            <Link v-if="authUser" :href="route('show.user.dashboard')" class="cmn-outline-btn uppercase mr-3">Dashboard</Link>
+                            <Link v-if="authUser" :href="route('user.logout')" class="cmn-btn uppercase">Logout</Link>
+                            <Link v-if="!authUser" :href="route('show.user.login')" class="cmn-btn uppercase">LOG IN</Link>
                         </div>
                     </div>
                 </nav>

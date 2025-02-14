@@ -5,7 +5,6 @@
 <template>
     <!-- banner-section start  -->
     <section class="banner-section banner-section--style2 bg_img banner-image">
-        <div class="banner-el-img"><img src="" alt="image"></div>
         <div class="container">
             <div class="row align-items-center">
                 <div class="col-lg-5">

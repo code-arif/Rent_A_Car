@@ -1,6 +1,47 @@
 <script setup>
 import GuestLayout from '../../../Layouts/GuestLayout.vue';
-import { Head, Link } from '@inertiajs/vue3';
+import { Head, Link, usePage, useForm } from '@inertiajs/vue3';
+const list = usePage();
+const form = useForm({
+    name: '',
+    email: '',
+    password: '',
+    password_confirmation: '',
+    address: '',
+    phone: '',
+});
+
+// Admin login function
+function CustomerRegisration() {
+    form.post(route('user.registration'), {
+        onSuccess: () => {
+            if (list.props.flash.status === true) {
+                successToast(list.props.flash.message);
+                form.reset();
+            } else {
+                errorToast(list.props.flash.message);
+            }
+        },
+
+        onError: (errors) => {
+            if (errors.name) {
+                errorToast(errors.name);
+            } else if (errors.email) {
+                errorToast(errors.email);
+            } else if (errors.password) {
+                errorToast(errors.password);
+            } else if (errors.password_confirmation) {
+                errorToast(errors.password_confirmation);
+            } else if (errors.address) {
+                errorToast(errors.address);
+            } else if (errors.phone) {
+                errorToast(errors.phone);
+            } else {
+                errorToast(list.props.flash.message);
+            }
+        }
+    });
+}
 </script>
 
 <template>
@@ -34,29 +75,34 @@ import { Head, Link } from '@inertiajs/vue3';
                         <div class="registration-block text-center">
                             <div class="registration-block-inner">
                                 <h3 class="title">create your account</h3>
-                                <form class="registration-form">
-                                    <div class="frm-group">
-                                        <input type="text" name="f-name" id="f-name" placeholder="First Name">
+                                <form class="registration-form" @submit.prevent="CustomerRegisration()">
+                                    <div class="form-group">
+                                        <input class="form-control" type="text" id="name" v-model="form.name"
+                                            placeholder="Name">
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="email" id="email" v-model="form.email" class="form-control"
+                                            placeholder="Email">
                                     </div>
                                     <div class="frm-group">
-                                        <input type="text" name="l-name" id="l-name" placeholder="Last Name">
+                                        <input type="phone" id="phone" v-model="form.phone" class="form-control"
+                                            placeholder="Phone">
+                                    </div>
+                                    <div>
+                                        <textarea rows="2" id="address" v-model="form.address" class="form-control"
+                                            placeholder="Address"></textarea>
+                                    </div>
+                                    <div class="frm-group mt-3">
+                                        <input type="password" id="password" v-model="form.password"
+                                            class="form-control" placeholder="Password">
                                     </div>
                                     <div class="frm-group">
-                                        <input type="email" name="name" id="name" placeholder="Your Email">
+                                        <input type="password" id="password_confirmation"
+                                            v-model="form.password_confirmation" class="form-control"
+                                            placeholder="Confirm Password">
                                     </div>
-                                    <div class="frm-group">
-                                        <input type="url" name="website" id="website" placeholder="Your Website">
-                                    </div>
-                                    <div class="frm-group">
-                                        <input type="password" name="pass" id="pass" placeholder="Your Password">
-                                    </div>
-                                    <div class="frm-group">
-                                        <input type="password" name="re-pass" id="re-pass"
-                                            placeholder="Enter Re-Password">
-                                    </div>
-                                    <div class="frm-group">
-                                        <input type="submit" value="create new account">
-                                    </div>
+
+                                    <button type="submit" class="cmn-btn w-100">Submit</button>
                                 </form>
                             </div>
                         </div>

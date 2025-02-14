@@ -17,10 +17,6 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
 
-    <!-- Libraries Stylesheet -->
-    <link href="{{ asset('users/lib/animate/animate.min.css') }}" rel="stylesheet">
-    <link href="{{ asset('users/lib/owlcarousel/assets/owl.carousel.min.css') }}" rel="stylesheet">
-
     <!-- Scripts -->
     @routes
     @vite(['resources/js/app.js', 'resources/css/app.css'])

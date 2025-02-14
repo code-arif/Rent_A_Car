@@ -66,7 +66,9 @@ import { route } from '../../../../vendor/tightenco/ziggy/src/js';
                                         <h4 class="title">pajero rang</h4>
                                         <span class="price">start form $20 per day</span>
                                         <p>Aliquam sollicitudin dolores tristiquvel ornare, vitae aenean.</p>
-                                        <a href="#0" class="cmn-btn">rent car</a>
+                                        <a href="#0" class="cmn-btn mr-2">Someone picked up</a>
+                                        <a href="#0" class="cmn-btn mr-2">Rent Reqeust</a>
+                                        <a href="#0" class="cmn-btn">Booked</a>
                                     </div>
                                     <div class="car-item-meta">
                                         <ul class="details-list">

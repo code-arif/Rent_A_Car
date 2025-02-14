@@ -8,14 +8,11 @@ import Navbar from '../Includes/Admin/Navbar.vue';
 
         <SideBar />
         <!-- Content Start -->
-        <div class="content">
-            <Navbar />
+        <div class="content1">
             <slot>
 
             </slot>
         </div>
-        <!-- Back to Top -->
-        <a href="#" class="btn btn-primary back-to-top"><i class="fa fa-angle-double-up"></i></a>
     </div>
 </template>
 

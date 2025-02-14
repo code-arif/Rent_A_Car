@@ -1,8 +1,7 @@
 import '../css/app.css';
-// import './bootstrap';
 import './Assets/css/bootstrap.min.css';
 import './Assets/css/main.css';
-// import './Assets/js/main.js';
+import './Assets/css/style.css';
 import './Assets/js/toast.js';
 import Toastify from 'toastify-js';
 import "toastify-js/src/toastify.css";

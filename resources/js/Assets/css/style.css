@@ -1,0 +1,133 @@
+:root {
+    --primary: #19cb00;
+    --light: #F3F6F9;
+    --dark: #333;
+}
+
+
+/*** Layout ***/
+.sidebar1 {
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    width: 250px;
+    height: 100vh;
+    overflow-y: auto;
+    background: #343a40 ;
+    transition: 0.5s;
+    z-index: 999;
+}
+
+.content1 {
+    margin-left: 250px;
+    min-height: 100vh;
+    background: #FFFFFF;
+    transition: 0.5s;
+    width: 100%;
+}
+
+
+@media (min-width: 992px) {
+    .sidebar1 {
+        margin-left: 0;
+    }
+
+    .sidebar.open {
+        margin-left: -250px;
+    }
+}
+
+@media (max-width: 991.98px) {
+    .sidebar1 {
+        margin-left: -250px;
+    }
+
+    .sidebar1.open {
+        margin-left: 0;
+    }
+}
+
+
+/*** Navbar ***/
+.sidebar1 .navbar .navbar-nav .nav-link {
+    padding: 7px 20px;
+    color: #fff;
+    font-weight: 500;
+    border-left: 3px solid #fff;
+    border-radius: 0 0px 0px 0;
+    outline: none;
+}
+
+.sidebar1 .navbar .navbar-nav .nav-link:hover,
+.sidebar1 .navbar .navbar-nav .nav-link.active {
+    color: #fff;
+    background:#424949;
+    border-color: #fff;
+}
+
+.sidebar1 .navbar .navbar-nav .nav-link i {
+    width: 40px;
+    height: 40px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: #343a40;
+    border-radius: 40px;
+}
+
+.sidebar1 .navbar .navbar-nav .nav-link:hover i,
+.sidebar1 .navbar .navbar-nav .nav-link.active i {
+    background: #343a40;
+}
+
+.sidebar1 .navbar .dropdown-toggle::after {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    border: none;
+    content: "\f107";
+    font-family: "Font Awesome 5 Free";
+    font-weight: 900;
+    transition: .5s;
+}
+
+.sidebar1 .navbar .dropdown-toggle[aria-expanded=true]::after {
+    transform: rotate(-180deg);
+}
+
+.sidebar1 .navbar .dropdown-item {
+    padding-left: 25px;
+    border-radius: 0 30px 30px 0;
+}
+
+.content .navbar .sidebar-toggler,
+.content .navbar .navbar-nav .nav-link i {
+    width: 40px;
+    height: 40px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: #FFFFFF;
+    border-radius: 40px;
+}
+
+.content .navbar .dropdown-toggle::after {
+    margin-left: 6px;
+    vertical-align: middle;
+    border: none;
+    content: "\f107";
+    font-family: "Font Awesome 5 Free";
+    font-weight: 900;
+    transition: .5s;
+}
+
+.content .navbar .dropdown-toggle[aria-expanded=true]::after {
+    transform: rotate(-180deg);
+}
+
+@media (max-width: 575.98px) {
+    .content .navbar .navbar-nav .nav-link {
+        margin-left: 15px;
+    }
+}
