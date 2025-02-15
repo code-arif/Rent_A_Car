@@ -14,6 +14,7 @@ use App\Http\Controllers\Frontend\ContactController;
 use App\Http\Controllers\Admin\AdminDashboardController;
 use App\Http\Controllers\Admin\CarManageController;
 use App\Http\Controllers\Admin\CustomerController;
+use App\Http\Controllers\Admin\RentalManageController;
 use App\Http\Controllers\Frontend\UserDashboardController;
 use App\Http\Middleware\UserAuthMiddleware;
 
@@ -38,13 +39,31 @@ Route::group(['middleware' => AdminAuthMiddleware::class], function () {
         Route::post('/update/{id}', [CarManageController::class, 'updateCar'])->name('update.car');
         Route::post('/delete/{id}', [CarManageController::class, 'deleteCar'])->name('delete.car');
         Route::post('/status-change/{id}', [CarManageController::class, 'changeCarStatus'])->name('change.car.status');
+
+        //manage car details
+        Route::get('/details/save',[CarManageController::class,'showSaveCarDetailsPage'])->name('show.save.car.details.page');
     });
 
     //====================customer management=====================//
     Route::group(['prefix' => 'customer'], function () {
         Route::get('/list', [CustomerController::class, 'showCustomerList'])->name('show.customer.list');
-        Route::post('/delete/{id}', [CarManageController::class, 'deleteCustomer'])->name('delete.customer');
+        Route::post('/delete/{id}', [CustomerController::class, 'deleteCustomer'])->name('delete.customer');
+        Route::get('/rent/history/', [CustomerController::class, 'rentalHistoryForThisCustomer'])->name('show.rental.history.for.cus');
     });
+
+    //=======================rental management=====================//
+    Route::group(['prefix' => 'rental'], function () {
+        Route::get('/list', [RentalManageController::class, 'showRentalList'])->name('show.rental.list');
+        Route::get('/save/{id?}', [RentalManageController::class, 'showRentalSave'])->name('show.rental.save');
+        Route::post('/store', [RentalManageController::class, 'rentalStore'])->name('store.rental');
+        Route::post('/update/{id}', [RentalManageController::class, 'updateRental'])->name('update.rental');
+        Route::post('/delete/{id}', [RentalManageController::class, 'deleteRental'])->name('delete.rental');
+        Route::post('/status-change/{id}', [RentalManageController::class, 'changRentalStatus'])->name('change.rental.status');
+    });
+
+    //========================order details ======================//
+    Route::get('rent/details/{id}', [RentalManageController::class, 'showRentDetails'])->name('show.order.details');
+
 });
 
 /*================================

@@ -1,16 +1,16 @@
 <script setup>
 import { Head } from '@inertiajs/vue3';
 import AdminLayout from '@/Layouts/AdminLayout.vue';
-import CarListComponent from '../../../Components/Admin/Car/CarListComponent.vue';
+import RentalListComponent from '../../../Components/Admin/Rental/RentalListComponent.vue';
 </script>
 
 <template>
 
     <Head>
-        <title>Car Rent || Car List</title>
+        <title>Car Rent || Rental List</title>
     </Head>
     <AdminLayout>
-        <CarListComponent />
+        <RentalListComponent />
     </AdminLayout>
 </template>
 

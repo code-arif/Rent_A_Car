@@ -37,7 +37,7 @@ const authUser = usePage().props.auth.user;
                         style="margin-right: 5px;"></i>Customer</Link>
             </div>
             <div class="navbar-nav w-100">
-                <a href="" class="nav-item nav-link"><i class="fa fa fa-key"
+                <a :href="route('show.rental.list')" class="nav-item nav-link" :class="{'active': $page.url === '/rental/list'}"><i class="fa fa fa-key"
                         style="margin-right: 5px;"></i>Rent</a>
             </div>
             <div class="navbar-nav w-100">

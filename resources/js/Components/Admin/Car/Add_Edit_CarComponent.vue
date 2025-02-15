@@ -161,7 +161,7 @@ function handleImageInput(event) {
                                 </select>
                             </div>
                             <div class="form-group col-md-6">
-                                <label class="mb-1" for="availability">Car Type</label>
+                                <label class="mb-1" for="availability">Availability</label>
                                 <select id="availability" class="from-select" v-model="form.availability">
                                     <option value="Available"> Available</option>
                                     <option value=" Not Available">Not Available</option>

@@ -22,8 +22,12 @@ class User extends Authenticatable
     protected function casts(): array
     {
         return [
-            'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+
+    //relation with rental table
+    public function rents(){
+        return $this->hasMany(Rental::class);
     }
 }

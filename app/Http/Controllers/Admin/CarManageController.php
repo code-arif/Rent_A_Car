@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Models\Car;
 use Inertia\Inertia;
+use App\Models\CarDetails;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Storage;
@@ -13,7 +14,7 @@ class CarManageController extends Controller
     //====================show car list in car manage page=====================//
     public function showCarList()
     {
-        $cars = Car::get();
+        $cars = Car::orderBy('id', 'desc')->get();
         return Inertia::render('Admin/Car/CarListPage', [
             'cars' => $cars,
         ]);
@@ -61,7 +62,7 @@ class CarManageController extends Controller
                 'weekly_rent_price' => 'nullable|numeric',
                 'status' => 'required|boolean',
                 'availability' => 'required|string',
-                'image' => 'rullable|max:2048',
+                'image' => 'nullable|max:2048',
             ],
             $message,
         );
@@ -184,5 +185,20 @@ class CarManageController extends Controller
             $data = ['message' => 'Car deleted successfully', 'status' => true, 'code' => 200];
             return redirect()->back()->with($data);
         }
+    }
+
+    /*================================
+    Car Details management
+    ================================*/
+
+    // ========================show car details save page=========================//
+    public function showSaveCarDetailsPage(Request $request, $id = null)
+    {
+        $id = $request->query('id');
+        $car_details = CarDetails::where('car_id', $id)->first();
+
+        return Inertia::render('Admin/Car/SaveCarDetailsPage', [
+            'car_details' => $car_details,
+        ]);
     }
 }

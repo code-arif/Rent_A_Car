@@ -131,7 +131,7 @@ const deleteCar = (id) => {
                             </template>
                             <template #item-number="{ id }">
                                 <div class="d-flex justify-content-center align-items-center">
-                                    <Link class="btn btn-sm btn-outline-info mr-2">
+                                    <Link :href="route('show.save.car.details.page', {id:id})" class="btn btn-sm btn-outline-info mr-2">
                                     <i class="fa fa-plus"></i>
                                     </Link>
                                     <Link :href="route('show.car.save', { id: id })"
