@@ -28,8 +28,21 @@ class RentalManageController extends Controller
     //=======================create rental =============================//
     public function rentalStore(Request $request)
     {
+        $message = [
+            'user_id.required' => 'Please select a customer',
+            'car_id.required' => 'Please select a car',
+            'name.max' => 'Name should not be more than 255 characters',
+            'phone.max' => 'Phone number should not be more than 255 characters',
+            'start_date.required' => 'Please select a start date',
+            'end_date.required' => 'Please select an end date',
+            'status.required' => 'Please select a status',
+            'pickup_location.max' => 'Pickup location should not be more than 255 characters',
+            'drop_off_location.max' => 'Drop off location should not be more than 255 characters',
+            'pickup_time.max' => 'Pickup time should not be more than 255 characters',
+            'drop_off_time.max' => 'Drop off time should not be more than 255 characters',
+        ];
         // Validation
-        $request->validate(
+        $validated_data = $request->validate(
             [
                 'user_id' => 'nullable|exists:users,id',
                 'car_id' => 'required|exists:cars,id',
@@ -38,16 +51,12 @@ class RentalManageController extends Controller
                 'start_date' => 'required|date|after_or_equal:today',
                 'end_date' => 'required|date|after:start_date',
                 'status' => 'required|in:Pending,Ongoing,Completed,Cancelled',
+                'pickup_location' => 'nullable|string|max:255',
+                'drop_off_location' => 'nullable|string|max:255',
+                'pickup_time' => 'nullable|string|max:255',
+                'drop_off_time' => 'nullable|string|max:255',
             ],
-            [
-                'user_id.required' => 'Please select a customer',
-                'car_id.required' => 'Please select a car',
-                'name.max' => 'Name should not be more than 255 characters',
-                'phone.max' => 'Phone number should not be more than 255 characters',
-                'start_date.required' => 'Please select a start date',
-                'end_date.required' => 'Please select an end date',
-                'status.required' => 'Please select a status',
-            ],
+            $message,
         );
 
         // Check if the car is available for the selected dates
@@ -70,18 +79,10 @@ class RentalManageController extends Controller
         $car = Car::findOrFail($request->car_id);
         $days = \Carbon\Carbon::parse($request->start_date)->diffInDays($request->end_date);
         $totalCost = $car->daily_rent_price * $days;
+        $validated_data['total_cost'] = $totalCost;
 
         // Create Rental Record
-        Rental::create([
-            'user_id' => $request->user_id,
-            'car_id' => $request->car_id,
-            'name' => $request->name,
-            'phone' => $request->phone,
-            'start_date' => $request->start_date,
-            'end_date' => $request->end_date,
-            'total_cost' => $totalCost,
-            'status' => $request->status,
-        ]);
+        Rental::create($validated_data);
 
         return redirect()
             ->back()
@@ -176,9 +177,10 @@ class RentalManageController extends Controller
     }
 
     //=============================== show rent details ==========================//
-    public function showRentDetails($id){
+    public function showRentDetails($id)
+    {
         $rental_details = Rental::with('user', 'car')->findOrFail($id);
-        return Inertia::render('Admin/Rental/RentDetailsPage',[
+        return Inertia::render('Admin/Rental/RentDetailsPage', [
             'rental_details' => $rental_details,
         ]);
     }

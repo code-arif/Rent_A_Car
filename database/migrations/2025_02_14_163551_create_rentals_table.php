@@ -21,6 +21,10 @@ return new class extends Migration
             $table->date('end_date');
             $table->decimal('total_cost', 10, 2);
             $table->enum('status', ['Pending', 'Ongoing', 'Completed', 'Cancelled'])->default('Pending');
+            $table->string('pickup_location')->nullable();
+            $table->string('drop_off_location')->nullable();
+            $table->string('pickup_time')->nullable();
+            $table->string('drop_off_time')->nullable();
             $table->timestamps();
         });
     }

@@ -14,8 +14,8 @@ const authUser = usePage().props.authCustomer.customer;
 
                     <div class="collapse navbar-collapse">
                         <ul class="navbar-nav main-menu m-auto">
-                            <li>
-                                <Link :href="route('show.home')">Home</Link>
+                            <li class="">
+                                <Link :href="route('show.home')"  :class="{ 'active': $page.url === '/' }">Home</Link>
                             </li>
                             <li>
                                 <Link :href="route('car.page')">Cars</Link>

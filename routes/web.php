@@ -41,14 +41,16 @@ Route::group(['middleware' => AdminAuthMiddleware::class], function () {
         Route::post('/status-change/{id}', [CarManageController::class, 'changeCarStatus'])->name('change.car.status');
 
         //manage car details
-        Route::get('/details/save',[CarManageController::class,'showSaveCarDetailsPage'])->name('show.save.car.details.page');
+        Route::get('/details/save/{id?}',[CarManageController::class,'showSaveCarDetailsPage'])->name('show.save.car.details.page');
+        Route::post('/details/save',[CarManageController::class,'saveCarDetails'])->name('save.car.details');
+        Route::post('/details/update',[CarManageController::class,'updateCarDetails'])->name('update.car.details');
     });
 
     //====================customer management=====================//
     Route::group(['prefix' => 'customer'], function () {
         Route::get('/list', [CustomerController::class, 'showCustomerList'])->name('show.customer.list');
         Route::post('/delete/{id}', [CustomerController::class, 'deleteCustomer'])->name('delete.customer');
-        Route::get('/rent/history/', [CustomerController::class, 'rentalHistoryForThisCustomer'])->name('show.rental.history.for.cus');
+        Route::get('/rent/history/{id}', [CustomerController::class, 'rentalHistoryForThisCustomer'])->name('show.rental.history.for.cus');
     });
 
     //=======================rental management=====================//
@@ -76,11 +78,13 @@ Route::get('/user/registration', [AuthController::class, 'ShowUserRegistration']
 Route::post('/user/registration', [AuthController::class, 'UserRegistration'])->name('user.registration');
 Route::get('/user/logout', [AuthController::class, 'UserLogout'])->name('user.logout');
 
-//===========================Car Route===========================//
-Route::get('/cars', [CarController::class, 'CarPage'])->name('car.page');
 
 // ===========================Home page===========================//
 Route::get('/', [HomeController::class, 'index'])->name('show.home');
+
+//===========================Car Route===========================//
+Route::get('/cars', [CarController::class, 'CarPage'])->name('car.page');
+Route::get('/car-details/{id}', [CarController::class, 'showCarDetails'])->name('show.car.details');
 
 //===========================about page =============================//
 Route::get('/about', [AboutController::class, 'about'])->name('show.about');
@@ -89,7 +93,8 @@ Route::get('/about', [AboutController::class, 'about'])->name('show.about');
 Route::get('/contact', [ContactController::class, 'contact'])->name('show.contact');
 
 //============================Reltal Route===========================//
-Route::get('/car-details', [RentalController::class, 'showCarDetails'])->name('show.car.details');
+Route::post('/create/rent', [RentalController::class, 'createRent'])->name('create.rent')->middleware(UserAuthMiddleware::class);
+Route::get('/rental/success', [RentalController::class, 'rentalSuccess'])->name('rental.success')->middleware(UserAuthMiddleware::class);;
 
 //==========================User Dashboard===========================//
 Route::get('/user/dashboard', [UserDashboardController::class, 'showUserDashboard'])

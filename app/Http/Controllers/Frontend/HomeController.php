@@ -10,7 +10,7 @@ use Inertia\Inertia;
 class HomeController extends Controller
 {
     public function index(){
-        $cars = Car::where('status', 1)->limit(6)->get();
+        $cars = Car::where('status', 1)->with('detail')->limit(6)->get();
         return Inertia::render('Frontend/HomePage',[
             'cars' => $cars,
         ]);

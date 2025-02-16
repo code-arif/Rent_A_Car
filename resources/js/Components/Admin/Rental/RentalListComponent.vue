@@ -54,6 +54,10 @@ const form = useForm({
     end_date: "",
     total_cost: "",
     status: "",
+    pickup_location: "",
+    drop_off_location: "",
+    pickup_time: "",
+    drop_off_time: "",
 });
 
 // Function to set form data when editing
@@ -66,6 +70,10 @@ const setEditRent = (rent) => {
     form.start_date = rent.start_date;
     form.end_date = rent.end_date;
     form.status = rent.status;
+    form.pickup_location = rent.pickup_location;
+    form.drop_off_location = rent.drop_off_location;
+    form.pickup_time = rent.pickup_time;
+    form.drop_off_time = rent.drop_off_time;
 };
 
 
@@ -94,7 +102,16 @@ const saveRent = () => {
                 errorToast(errors.end_date);
             } else if (errors.status) {
                 errorToast(errors.status);
-            } else {
+            } else if (errors.pickup_location) {
+                errorToast(errors.pickup_location);
+            } else if (errors.drop_off_location) {
+                errorToast(errors.drop_off_location);
+            } else if (errors.pickup_time) {
+                errorToast(errors.pickup_time);
+            } else if (errors.drop_off_time) {
+                errorToast(errors.drop_off_time);
+            }
+            else {
                 errorToast('An error occurred');
             }
         }
@@ -165,13 +182,15 @@ const deleteRent = (id) => {
                                     'btn-success': status === 'Completed',
                                     'btn-warning': status === 'Pending',
                                     'btn-info': status === 'Ongoing',
-                                    'btn-danger': status === 'Cancelled',}">
+                                    'btn-danger': status === 'Cancelled',
+                                }">
                                     {{ status }}
                                 </button>
                             </template>
                             <template #item-number="{ id, user_id, car_id, start_date, end_date, status, name, phone }">
                                 <div class="d-flex justify-content-center align-items-center">
-                                    <Link :href="route('show.order.details',{id: id})" class="btn btn-sm btn-outline-info mr-2">
+                                    <Link :href="route('show.order.details', { id: id })"
+                                        class="btn btn-sm btn-outline-info mr-2">
                                     <i class="fa fa-info"></i>
                                     </Link>
                                     <button class="btn btn-sm btn-outline-primary"
@@ -206,9 +225,12 @@ const deleteRent = (id) => {
                                 </option>
                             </select>
                         </div>
-
-                        <p class="text-center">-----------------------Or Custome Order-----------------------</p>
-                        <div id="custom_order">
+                        
+                        <div class="custom-control custom-checkbox">
+                            <label class="custom-control-label mb-2" data-bs-toggle="collapse"
+                                data-bs-target="#custom_order">Or make custom order</label>
+                        </div>
+                        <div class="collapse" id="custom_order">
                             <div class="row">
                                 <div class="col-md-12 form-group mb-3">
                                     <input class="form-control" type="text" placeholder="Name" v-model="form.name">
@@ -244,6 +266,25 @@ const deleteRent = (id) => {
                                 <option value="Completed">Completed</option>
                                 <option value="Cancelled">Cancelled</option>
                             </select>
+                        </div>
+
+                        <div class="form-group mb-2">
+                            <input type="text" class="form-control" v-model="form.pickup_location"
+                                placeholder="Pickup Location">
+                        </div>
+                        <div class="form-group mb-2">
+                            <input type="text" class="form-control" v-model="form.drop_off_location"
+                                placeholder="Drop Off Location">
+                        </div>
+
+                        <div class="form-group mb-2">
+                            <input type="text" class="form-control" v-model="form.pickup_time"
+                                placeholder="Pickup Time">
+                        </div>
+
+                        <div class="form-group mb-2">
+                            <input type="text" class="form-control" v-model="form.drop_off_time"
+                                placeholder="Drop Off Time">
                         </div>
 
                         <button class="cmn-btn w-100">

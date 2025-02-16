@@ -1,10 +1,32 @@
 <script setup>
-import { Link } from '@inertiajs/vue3';
-import { route } from '../../../../vendor/tightenco/ziggy/src/js';
+import { usePage, Link, router } from '@inertiajs/vue3';
+import { ref, watch } from 'vue';
+
+const list = usePage();
+const cars = ref(list.props.cars.data || []);
+const links = ref(list.props.cars.links || []);
+const selectedType = ref('');
+const searchQuery = ref('');
+
+// Watch for changes in selectedType and searchQuery
+watch([selectedType, searchQuery], ([newType, newSearch]) => {
+    router.get(route('car.page'), {
+        car_type: newType,
+        search: newSearch,
+    }, {
+        preserveState: true,
+        preserveScroll: true,
+        onSuccess: (page) => {
+            cars.value = page.props.cars.data;
+            links.value = page.props.cars.links;
+        }
+    });
+});
 </script>
 
+
 <template>
-    <!-- inner-apge-banner start -->
+    <!-- Inner Page Banner -->
     <section class="inner-page-banner bg_img overlay-3"
         style="background-image: url('https://images.unsplash.com/photo-1613214149922-f1809c99b414?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D');">
         <div class="container">
@@ -21,84 +43,86 @@ import { route } from '../../../../vendor/tightenco/ziggy/src/js';
             </div>
         </div>
     </section>
-    <!-- inner-apge-banner end -->
 
-    <!-- car-search-section start -->
+    <!-- Car Search Section -->
     <section class="car-search-section pt-120 pb-120">
         <div class="container">
             <div class="row">
                 <div class="col-lg-12">
-                    <div class="car-search-filter-area">
-                        <div class="car-search-filter-form-area">
-                            <form class="car-search-filter-form">
-                                <div class="row justify-content-between">
-                                    <div class="col-lg-4 col-md-5 col-sm-6">
-                                        <div class="cart-sort-field">
-                                            <span class="caption">Sort by : </span>
-                                            <select>
-                                                <option>Pajero Range</option>
-                                                <option>Toyota Axio</option>
-                                                <option>Lancer</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-7 col-md-7 col-sm-6 d-flex">
-                                        <input type="text" name="car_search" id="car_search"
-                                            placeholder="Search what you want........">
-                                        <button class="search-submit-btn">Search</button>
-                                    </div>
+                    <form>
+                        <div class="row justify-content-between">
+                            <div class="col-lg-4 col-md-5 col-sm-6">
+                                <div class="cart-sort-field">
+                                    <select v-model="selectedType">
+                                        <option value="">All Cars</option>
+                                        <option value="Sedan">Sedan</option>
+                                        <option value="SUV">SUV</option>
+                                        <option value="Hatchback">Hatchback</option>
+                                        <option value="Truck">Truck</option>
+                                    </select>
                                 </div>
-                            </form>
+                            </div>
+                            <div class="col-lg-8 col-md-7 col-sm-6 d-flex">
+                                <input type="text" class="form-control"
+                                    placeholder="Search with car name and price........" v-model="searchQuery">
+                            </div>
                         </div>
-                    </div>
+                    </form>
                 </div>
             </div>
-            <div class="row mt-70">
+
+            <div class="row mt-50">
+                <!-- car list -->
                 <div class="col-lg-8">
                     <div class="car-search-result-area list--view row mb-none-30">
-                        <div class="col-md-6 col-12">
+                        <!-- Car Card -->
+                        <div class="col-md-6 col-12" v-for="car in cars" :key="car.id">
                             <div class="car-item car-item--style2">
-                                <div class="thumb bg_img"
-                                    style="background-image: url('https://images.unsplash.com/photo-1571348500628-1e9b6aa00dba?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D');">
+                                <div>
+                                    <img :src="car?.image ? `/storage/${car?.image}` : 'https://skala.or.id/wp-content/uploads/2024/01/dummy-post-square-1-1.jpg'"
+                                        alt="car image" style="width: 250px; height: 300px; object-fit: cover;">
                                 </div>
                                 <div class="car-item-body">
                                     <div class="content">
-                                        <h4 class="title">pajero rang</h4>
-                                        <span class="price">start form $20 per day</span>
-                                        <p>Aliquam sollicitudin dolores tristiquvel ornare, vitae aenean.</p>
-                                        <a href="#0" class="cmn-btn mr-2">Someone picked up</a>
-                                        <a href="#0" class="cmn-btn mr-2">Rent Reqeust</a>
-                                        <a href="#0" class="cmn-btn">Booked</a>
+                                        <h4 class="title">{{ car.name }}</h4>
+                                        <span class="price">start form {{ car.daily_rent_price }}/-BDT per day</span>
+                                        <p>
+                                            {{ car.detail?.short_description.length > 100
+                                                ? car.detail?.short_description.slice(0, 80) + '...'
+                                                : car.detail?.short_description
+                                            }}
+                                        </p>
+                                        <Link :href="route('show.car.details', { id: car.id })" class="cmn-btn">rent car
+                                        </Link>
                                     </div>
                                     <div class="car-item-meta">
                                         <ul class="details-list">
-                                            <li><i class="fa fa-car"></i>model 2014ib</li>
-                                            <li><i class="fa fa-tachometer"></i>32000 KM</li>
-                                            <li><i class="fa fa-sliders"></i>auto</li>
+                                            <li><i class="fa fa-car"></i>Model: {{ car?.model }}</li>
+                                            <li><i class="fa fa-tachometer"></i>{{ car.detail?.mileage }} KM/L</li>
+                                            <li><i class="fa fa-sliders"></i>{{ car?.car_type }}</li>
                                         </ul>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <nav class="d-pagination" aria-label="Page navigation example">
+
+                    <!-- Pagination -->
+                    <nav class="d-pagination" aria-label="Page navigation">
                         <ul class="pagination justify-content-center">
-                            <li class="page-item active"><a class="page-link" href="#">1</a></li>
-                            <li class="page-item"><a class="page-link" href="#">2</a></li>
-                            <li class="page-item"><a class="page-link" href="#">3</a></li>
-                            <li class="page-item"><a class="page-link" href="#">4</a></li>
-                            <li class="page-item"><a class="page-link" href="#">5</a></li>
+                            <li v-for="(link, index) in links" :key="index" class="page-item"
+                                :class="{ active: link.active, disabled: !link.url }">
+                                <Link v-if="link.url" :href="link.url" class="page-link" v-html="link.label">
+                                </Link>
+                                <span v-else class="page-link" v-html="link.label"></span>
+                            </li>
                         </ul>
                     </nav>
                 </div>
+
+                <!-- car reservation -->
                 <div class="col-lg-4">
                     <aside class="sidebar">
-
-                        <div class="widget widget-price-filter">
-                            <h4 class="widget-title">price filter</h4>
-                            <input type="range" id="amount" name="amount" min="0" max="100">
-                        </div>
-
                         <div class="widget widget-reservation">
                             <h4 class="widget-title">reservation</h4>
                             <div class="widget-body">
@@ -151,6 +175,4 @@ import { route } from '../../../../vendor/tightenco/ziggy/src/js';
             </div>
         </div>
     </section>
-    <!-- car-search-section end -->
 </template>
-

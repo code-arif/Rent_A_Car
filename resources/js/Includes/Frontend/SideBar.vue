@@ -21,7 +21,9 @@ const authUser = usePage().props.authCustomer.customer;
                 </div>
             </div>
             <div class="navbar-nav w-100">
-                <a href="" class="nav-item nav-link active"><i class="fa fa fa-laptop" style="margin-right: 5px;"></i>Dashboard</a>
+                <Link href="" class="nav-item nav-link active"><i class="fa fa fa-laptop" style="margin-right: 5px;"></i>Dashboard</Link>
+                <Link href="" class="nav-item nav-link"><i class="fa fa-user" style="margin-right: 5px;"></i>Profile</Link>
+                <Link href="" class="nav-item nav-link"><i class="fa fa-shopping-cart" style="margin-right: 5px;"></i>My Bookings</Link>
             </div>
             <div class="navbar-nav w-100" v-if="authUser">
                 <a :href="route('user.logout')" class="nav-item nav-link"><i class="fa fa-minus-square" style="margin-right: 5px;"></i>Logout</a>

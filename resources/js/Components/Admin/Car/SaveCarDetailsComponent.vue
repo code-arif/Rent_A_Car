@@ -3,12 +3,12 @@ import { ref, computed } from "vue";
 import { Link, usePage, useForm } from "@inertiajs/vue3";
 
 const list = usePage();
-const car_details = list.props.car_details || {}; // অ্যারে ছিল, এখন অবজেক্ট নিচ্ছি
+const car = list.props.car || {};
+const car_details = list.props.car_details || [];
 
 const form = useForm({
-    id: car_details.id || null,
+    car_id: car.id || null,
     short_description: car_details.short_description || "",
-    description: car_details.description || "",
     description: car_details.description || "",
     seats: car_details.seats || "",
     fuel_type: car_details.fuel_type || "",
@@ -20,13 +20,46 @@ const form = useForm({
     usb_port: car_details.usb_port === 1 ? true : false,
 });
 
-const saveCarDetails = () => {
-    form.post(route("save.car.details"), {
+function saveCarDetails() {
+    const routeName = car_details.id ? "update.car.details" : "save.car.details";
+    form.post(route(routeName), {
         onSuccess: () => {
-            alert("Car details saved successfully!");
+            if (list.props.flash.status === true) {
+                successToast(list.props.flash.message);
+                form.reset();
+            } else {
+                errorToast(list.props.flash.message);
+            }
+        },
+        onError: (errors) => {
+            if (errors.car_id) {
+                errorToast(errors.car_id);
+            } else if (errors.short_description) {
+                errorToast(errors.short_description);
+            } else if (errors.description) {
+                errorToast(errors.description);
+            } else if (errors.seats) {
+                errorToast(errors.seats);
+            } else if (errors.fuel_type) {
+                errorToast(errors.fuel_type);
+            } else if (errors.mileage) {
+                errorToast(errors.mileage);
+            } else if (errors.transmission) {
+                errorToast(errors.transmission);
+            } else if (errors.air_conditioning) {
+                errorToast(errors.air_conditioning);
+            } else if (errors.gps) {
+                errorToast(errors.gps);
+            } else if (errors.bluetooth) {
+                errorToast(errors.bluetooth);
+            } else if (errors.usb_port) {
+                errorToast(errors.usb_port);
+            } else {
+                errorToast(list.props.flash.message);
+            }
         },
     });
-};
+}
 </script>
 
 <template>

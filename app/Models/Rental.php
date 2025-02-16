@@ -14,7 +14,11 @@ class Rental extends Model
         'start_date',
         'end_date',
         'total_cost',
-        'status'
+        'status',
+        'pickup_location',
+        'drop_off_location',
+        'pickup_time',
+        'drop_off_time',
     ];
 
     //relation with user table

@@ -2,32 +2,26 @@
 
 namespace App\Mail;
 
+use App\Models\Rental;
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Mail\Mailables\Content;
-use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Mail\Mailables\Envelope;
+use Illuminate\Contracts\Queue\ShouldQueue;
 
-class VendorConfirmationMail extends Mailable
+class RentalCreated extends Mailable
 {
     use Queueable, SerializesModels;
+
+    public $rental; // Public property to hold rental data
 
     /**
      * Create a new message instance.
      */
-    public $vendor;
-
-    public function __construct($vendor)
+    public function __construct(Rental $rental)
     {
-        $this->vendor = $vendor;
-    }
-
-    public function build()
-    {
-        return $this->subject('Confirm Your Account')
-            ->view('emails.vendor_confirmation')
-            ->with(['code' => base64_encode($this->vendor->email)]);
+        $this->rental = $rental; // Pass rental data to mailable
     }
 
     /**
@@ -35,7 +29,9 @@ class VendorConfirmationMail extends Mailable
      */
     public function envelope(): Envelope
     {
-        return new Envelope(subject: 'Vendor Confirmation Mail');
+        return new Envelope(
+            subject: 'Rental Created',
+        );
     }
 
     /**
@@ -43,7 +39,9 @@ class VendorConfirmationMail extends Mailable
      */
     public function content(): Content
     {
-        return new Content(view: 'emails.vendor_confirmation');
+        return new Content(
+            view: 'emails.rental.rental_created',
+        );
     }
 
     /**

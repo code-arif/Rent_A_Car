@@ -46,16 +46,16 @@ const imagePreview = ref(
                                 <img :src="imagePreview" alt="Product Image"
                                     style="width: 150px; height: 150px; object-fit: cover;">
                                 <div>
-                                    <h3 style="margin-bottom: 5px;"><strong>Car Name:</strong> <span class="text-info"
-                                            style="font-size: 22px;">{{ rental_details.car.name }}</span></h3>
+                                    <h5 style="margin-bottom: 5px;"><strong>Car Name:</strong> <span class="text-info"
+                                            style="font-size: 22px;">{{ rental_details.car.name }}</span></h5>
                                     <p style="margin: 0;">Daily Rent Price: <span class="text-info">{{
                                         rental_details.car.daily_rent_price }}</span></p>
                                     <p style="margin: 0;">Brand: <span class="text-info">{{ rental_details.car.brand
-                                            }}</span></p>
+                                    }}</span></p>
                                     <p style="margin: 0;">Model: <span class="text-info">{{ rental_details.car.model
-                                            }}</span></p>
+                                    }}</span></p>
                                     <p style="margin: 0;">Year: <span class="text-info">{{ rental_details.car.year
-                                            }}</span></p>
+                                    }}</span></p>
                                 </div>
                             </div>
                         </div>
@@ -76,15 +76,33 @@ const imagePreview = ref(
                         <div class="mb-3">
                             <div style="display: flex; align-items: center; gap: 15px;">
                                 <div>
-                                    <h3 style="margin-bottom: 5px;"><strong>Customer Name:</strong> <span class="text-info"
-                                            style="font-size: 22px;">{{ rental_details.user?.name || rental_details.name }}</span></h3>
+                                    <h5 style="margin-bottom: 5px;"><strong>Customer Name:</strong> <span
+                                            class="text-info" style="font-size: 22px;">{{ rental_details.user?.name ||
+                                            rental_details.name }}</span></h5>
                                     <p style="margin: 0;">Cutomer Phone: <span class="text-info">{{
                                         rental_details.user?.phone || rental_details.phone }}</span></p>
-                                    <p style="margin: 0;">Start Date: <span class="text-info">{{ rental_details.start_date
+                                    <p style="margin: 0;">Cutomer Email: <span class="text-info">{{
+                                        rental_details.user?.email ?? "N/A" }}</span></p>
+
+                                    <p style="margin: 0;">Start Date: <span class="text-info">{{
+                                        rental_details.start_date
                                             }}</span></p>
                                     <p style="margin: 0;">End Date: <span class="text-info">{{ rental_details.end_date
+                                    }}</span></p>
+                                    <p style="margin: 0;">Total Cost: <span class="text-danger">{{
+                                        rental_details.total_cost
                                             }}</span></p>
-                                    <p style="margin: 0;">Total Cost: <span class="text-info">{{ rental_details.total_cost
+                                    <p style="margin: 0;">Pickup Location: <span class="text-info">{{
+                                        rental_details?.pickup_location ?? "N/A"
+                                            }}</span></p>
+                                    <p style="margin: 0;">Drop off Location: <span class="text-info">{{
+                                        rental_details?.drop_off_location ?? "N/A"
+                                            }}</span></p>
+                                    <p style="margin: 0;">Pick up Time: <span class="text-info">{{
+                                        rental_details?.pickup_time ?? "N/A"
+                                            }}</span></p>
+                                    <p style="margin: 0;">Total Cost: <span class="text-info">{{
+                                        rental_details?.drop_off_time ?? "N/A"
                                             }}</span></p>
                                 </div>
                             </div>

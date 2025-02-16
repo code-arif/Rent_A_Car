@@ -192,13 +192,112 @@ class CarManageController extends Controller
     ================================*/
 
     // ========================show car details save page=========================//
-    public function showSaveCarDetailsPage(Request $request, $id = null)
+    public function showSaveCarDetailsPage($id = null)
     {
-        $id = $request->query('id');
-        $car_details = CarDetails::where('car_id', $id)->first();
+        $car_details = null;
+
+        if ($id) {
+            $car = Car::findOrFail($id);
+            $car_details = CarDetails::where('car_id', $id)->first();
+        }
 
         return Inertia::render('Admin/Car/SaveCarDetailsPage', [
+            'car' => $car,
             'car_details' => $car_details,
         ]);
+    }
+
+    //============================save car detaile===========================//
+    public function saveCarDetails(Request $request)
+    {
+        $message = [
+            'car_id.required' => 'Car id is required',
+            'car_id.exists' => 'Car id does not exist',
+            'short_description.required' => 'Short description is required',
+            'short_description.max' => 'Short description should not be more than 255 characters',
+            'description.max' => 'Long description should not be more than 200 characters',
+            'seats.required' => 'Number of seats is required',
+            'seats.min' => 'Number of seats should be at least 1',
+            'fuel_type.required' => 'Fuel type is required',
+            'mileage.numeric' => 'Mileage should be a number',
+            'mileage.min' => 'Mileage should be at least 1',
+            'transmission.required' => 'Transmission is required',
+            'air_conditioning.boolean' => 'Air conditioning should be a boolean value',
+            'gps.boolean' => 'Air conditioning should be a boolean value',
+            'bluetooth.boolean' => 'Air conditioning should be a boolean value',
+            'usb_port.boolean' => 'Air conditioning should be a boolean value',
+        ];
+
+        $validated_data = $request->validate(
+            [
+                'car_id' => 'required|exists:cars,id',
+                'short_description' => 'required|string|max:255',
+                'description' => 'nullable|string|max:5000',
+                'seats' => 'required|integer|min:1',
+                'fuel_type' => 'required|in:Petrol,Diesel,CNG,Electric',
+                'mileage' => 'nullable|numeric|min:0',
+                'transmission' => 'required|in:Manual,Automatic',
+                'air_conditioning' => 'boolean',
+                'gps' => 'boolean',
+                'bluetooth' => 'boolean',
+                'usb_port' => 'boolean',
+            ],
+            $message,
+        );
+
+        $car_details = CarDetails::create($validated_data);
+
+        if ($car_details) {
+            $data = ['message' => 'Car details saved successfully', 'status' => true];
+            return redirect()->route('show.car.list')->with($data);
+        }
+    }
+
+    //======================update car details ==========================//
+    public function updateCarDetails(Request $request)
+    {
+        $message = [
+            'car_id.required' => 'Car id is required',
+            'car_id.exists' => 'Car id does not exist',
+            'short_description.required' => 'Short description is required',
+            'short_description.max' => 'Short description should not be more than 255 characters',
+            'description.max' => 'Long description should not be more than 200 characters',
+            'seats.required' => 'Number of seats is required',
+            'seats.min' => 'Number of seats should be at least 1',
+            'fuel_type.required' => 'Fuel type is required',
+            'mileage.numeric' => 'Mileage should be a number',
+            'mileage.min' => 'Mileage should be at least 1',
+            'transmission.required' => 'Transmission is required',
+            'air_conditioning.boolean' => 'Air conditioning should be a boolean value',
+            'gps.boolean' => 'Air conditioning should be a boolean value',
+            'bluetooth.boolean' => 'Air conditioning should be a boolean value',
+            'usb_port.boolean' => 'Air conditioning should be a boolean value',
+        ];
+
+        $validated_data = $request->validate(
+            [
+                'car_id' => 'required|exists:cars,id',
+                'short_description' => 'required|string|max:255',
+                'description' => 'nullable|string|max:5000',
+                'seats' => 'required|integer|min:1',
+                'fuel_type' => 'required|in:Petrol,Diesel,CNG,Electric',
+                'mileage' => 'nullable|numeric|min:0',
+                'transmission' => 'required|in:Manual,Automatic',
+                'air_conditioning' => 'boolean',
+                'gps' => 'boolean',
+                'bluetooth' => 'boolean',
+                'usb_port' => 'boolean',
+            ],
+            $message,
+        );
+
+        $car_details = CarDetails::where('car_id', $validated_data['car_id'])->first();
+
+        $car_details->update($validated_data);
+
+        if($car_details){
+            $data = ['message' => 'Car details updated successfully', 'status' => true];
+            return redirect()->route('show.car.list')->with($data);
+        }
     }
 }
