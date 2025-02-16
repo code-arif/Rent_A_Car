@@ -21,12 +21,17 @@ const authUser = usePage().props.authCustomer.customer;
                 </div>
             </div>
             <div class="navbar-nav w-100">
-                <Link href="" class="nav-item nav-link active"><i class="fa fa fa-laptop" style="margin-right: 5px;"></i>Dashboard</Link>
-                <Link href="" class="nav-item nav-link"><i class="fa fa-user" style="margin-right: 5px;"></i>Profile</Link>
-                <Link href="" class="nav-item nav-link"><i class="fa fa-shopping-cart" style="margin-right: 5px;"></i>My Bookings</Link>
+                <Link :href="route('show.user.profile', {id: authUser.id})" class="nav-item nav-link" :class="{'active': $page.url === `/user/profile/${authUser.id}`}"><i class="fa fa-user" style="margin-right: 5px;"></i>Profile
+                </Link>
+                <Link :href="route('show.booking.history', { id: authUser.id })" class="nav-item nav-link"
+                    :class="{ 'active': $page.url === `/booking/history/${authUser.id}` }">
+                <i class="fa fa-shopping-cart" style="margin-right: 5px;"></i>My Bookings
+                </Link>
+
             </div>
             <div class="navbar-nav w-100" v-if="authUser">
-                <a :href="route('user.logout')" class="nav-item nav-link"><i class="fa fa-minus-square" style="margin-right: 5px;"></i>Logout</a>
+                <a :href="route('user.logout')" class="nav-item nav-link"><i class="fa fa-minus-square"
+                        style="margin-right: 5px;"></i>Logout</a>
             </div>
         </nav>
 

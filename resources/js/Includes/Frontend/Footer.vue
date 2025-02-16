@@ -11,19 +11,12 @@ import { Link } from '@inertiajs/vue3';
                     <div class="col-lg-4 col-sm-8">
                         <div class="footer-widget">
                             <div class="">
-                                <Link href="" class="navbar-brand mx-4 mb-3">
+                                <Link :href="route('show.home')" class="text-start navbar-brand mx-4 mb-3">
                                 <h3 class="text-light"><i class="fa fa-car" style="margin-right: 5px;"></i>Car Rent</h3>
                                 </Link>
                                 <p>Lorem ipsum dolor sit amet, congue placeranec. Leo faucibus sed eleifend bibendum n
                                     vehicula nulla mauris nulla ipsum neque sed. Gravida egestas fermentum urna, velit
                                     sed. </p>
-                                <!-- <ul class="social-links">
-                                    <li><a href="#0"><i class="fa fa-facebook"></i></a></li>
-                                    <li><a href="#0"><i class="fa fa-twitter"></i></a></li>
-                                    <li><a href="#0"><i class="fa fa-linkedin"></i></a></li>
-                                    <li><a href="#0"><i class="fa fa-google-plus"></i></a></li>
-                                </ul> -->
-                                <!-- <i class="fa fa-linkedin" aria-hidden="true"></i> -->
                             </div>
                         </div>
                     </div>
@@ -31,16 +24,11 @@ import { Link } from '@inertiajs/vue3';
                         <div class="footer-widget widget-menu">
                             <h4 class="widget-title">our cars</h4>
                             <ul>
-                                <li><a href=""> <i class="fa fa-chevron-right" aria-hidden="true"></i> mistubishi
-                                        lancer</a></li>
-                                <li><a href="#0"> <i class="fa fa-chevron-right" aria-hidden="true"></i> forester
-                                        subar</a></li>
-                                <li><a href="#0"><i class="fa fa-chevron-right" aria-hidden="true"></i> mirage ange</a>
+                                <li><Link href=""> <i class="fa fa-chevron-right" aria-hidden="true"></i> SUV </Link></li>
+                                <li><Link href="#0"> <i class="fa fa-chevron-right" aria-hidden="true"></i> Sedan </Link></li>
+                                <li><Link href="#0"><i class="fa fa-chevron-right" aria-hidden="true"></i> Hatchback </Link>
                                 </li>
-                                <li><a href="#0"> <i class="fa fa-chevron-right" aria-hidden="true"></i> pajero
-                                        range</a></li>
-                                <li><a href="#0"> <i class="fa fa-chevron-right" aria-hidden="true"></i> subaru
-                                        liberty</a></li>
+                                <li><Link href="#0"> <i class="fa fa-chevron-right" aria-hidden="true"></i> Truck</Link></li>
                             </ul>
                         </div>
                     </div>
@@ -49,13 +37,11 @@ import { Link } from '@inertiajs/vue3';
                         <div class="footer-widget widget-menu">
                             <h4 class="widget-title">useful link</h4>
                             <ul>
-                                <li><a href="#0"> <i class="fa fa-chevron-right" aria-hidden="true"></i> about</a></li>
-                                <li><a href="#0"> <i class="fa fa-chevron-right" aria-hidden="true"></i> reservation</a>
+                                <li><Link :href="route('show.home')"> <i class="fa fa-chevron-right" aria-hidden="true"></i> Home</Link></li>
+                                <li><Link :href="route('car.page')"> <i class="fa fa-chevron-right" aria-hidden="true"></i> Reservation</Link>
                                 </li>
-                                <li><a href="#0"> <i class="fa fa-chevron-right" aria-hidden="true"></i> faq</a></li>
-                                <li><a href="#0"> <i class="fa fa-chevron-right" aria-hidden="true"></i> blog</a></li>
-                                <li><a href="#0"> <i class="fa fa-chevron-right" aria-hidden="true"></i> car list</a>
-                                </li>
+                                <li><Link :href="route('show.about')"> <i class="fa fa-chevron-right" aria-hidden="true"></i> About</Link></li>
+                                <li><Link :href="route('show.contact')"> <i class="fa fa-chevron-right" aria-hidden="true"></i> Contact</Link></li>
                             </ul>
                         </div>
                     </div>

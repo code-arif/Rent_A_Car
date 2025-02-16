@@ -144,7 +144,7 @@ const deleteRent = (id) => {
         <div class="rounded-top p-4" style="border: 1px solid #ddd;">
             <div class="row align-items-center justify-content-between">
                 <div class="col-auto">
-                    <h4>Rental List</h4>
+                    <h4>Rental List/Custom Rental Create/Update</h4>
                 </div>
             </div>
         </div>
@@ -154,9 +154,91 @@ const deleteRent = (id) => {
     <!-- rent list start -->
     <div class="container-fluid pt-4 px-4">
         <div class="row g-4 mb-3">
+
+            <!-- Rent Form start -->
+            <div class="col-sm-12 col-xl-12 mb-4">
+                <div class="rounded h-100 p-4" style="border: 1px solid #ddd;">
+                    <h6>{{ form.id ? "Edit Rental" : "Create Rental" }}</h6>
+                    <hr>
+
+                    <form @submit.prevent="saveRent">
+                        <div class="row">
+                            <div class="form-group col-md-3">
+                                <select class="form-select" v-model="form.user_id">
+                                    <option value="" disabled>Select Customer</option>
+                                    <option v-for="customer in customers" :key="customer.id" :value="customer.id">
+                                        {{ customer.name }} - ({{ customer.phone }})
+                                    </option>
+                                </select>
+                            </div>
+                            <div class="form-group col-md-3">
+                                <select class="form-select" v-model="form.car_id" required>
+                                    <option value="" disabled>Select Car</option>
+                                    <option v-for="car in cars" :key="car.id" :value="car.id">
+                                        {{ car.name }} - {{ car.model }} ({{ car.daily_rent_price }}/- per day)
+                                    </option>
+                                </select>
+                            </div>
+
+                            <div class="form-group col-md-3">
+                                <input class="form-control" type="text" placeholder="Name for custom order"
+                                    v-model="form.name">
+                            </div>
+
+                            <div class="form-group col-md-3">
+                                <input class="form-control" type="tel" placeholder="Phone for custom order"
+                                    v-model="form.phone">
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="form-group col-md-4">
+                                <input type="date" class="form-control" v-model="form.start_date" required>
+                            </div>
+                            <div class="form-group col-md-4">
+                                <input type="date" class="form-control" v-model="form.end_date" required>
+                            </div>
+
+                            <div class="form-group col-md-4">
+                                <select v-model="form.status">
+                                    <option value="" disabled>Select Status</option>
+                                    <option value="Pending">Pending</option>
+                                    <option value="Ongoing">Ongoing</option>
+                                    <option value="Completed">Completed</option>
+                                    <option value="Cancelled">Cancelled</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="form-group col-md-3">
+                                <input type="text" class="form-control" v-model="form.pickup_location"
+                                    placeholder="Pickup Location">
+                            </div>
+                            <div class="form-group col-md-3">
+                                <input type="text" class="form-control" v-model="form.drop_off_location"
+                                    placeholder="Drop Off Location">
+                            </div>
+                            <div class="form-group col-md-3">
+                                <input type="text" class="form-control" v-model="form.pickup_time"
+                                    placeholder="Pickup Time">
+                            </div>
+                            <div class="form-group col-md-3">
+                                <input type="text" class="form-control" v-model="form.drop_off_time"
+                                    placeholder="Drop Off Time">
+                            </div>
+                        </div>
+                        <button class="cmn-btn w-100">
+                            {{ form.id ? "Update Rental" : "Save Rental" }}
+                        </button>
+                    </form>
+                </div>
+            </div>
+            <!-- Rent form end -->
+
             <!-- rent table start -->
-            <div class="col-sm-12 col-xl-8">
-                <div class="rounded p-4" style="border: 1px solid #ddd;">
+            <div class="col-sm-12 col-xl-12">
+                <div class="rounded p-4" style="border: 1px solid #19cb00;">
                     <div class="d-flex justify-content-between mb-3 align-item-center">
                         <div>
                             <h6>All Rent is here</h6>
@@ -209,90 +291,6 @@ const deleteRent = (id) => {
             </div>
             <!-- rent table end -->
 
-
-            <!-- Rent Form -->
-            <div class="col-sm-12 col-xl-4">
-                <div class="rounded h-100 p-4" style="border: 1px solid #ddd;">
-                    <h6>{{ form.id ? "Edit Rental" : "Create Rental" }}</h6>
-                    <hr>
-
-                    <form @submit.prevent="saveRent">
-                        <div class="form-group mb-2">
-                            <select class="form-select" v-model="form.user_id">
-                                <option value="" disabled>Select Customer</option>
-                                <option v-for="customer in customers" :key="customer.id" :value="customer.id">
-                                    {{ customer.name }} - ({{ customer.phone }})
-                                </option>
-                            </select>
-                        </div>
-                        
-                        <div class="custom-control custom-checkbox">
-                            <label class="custom-control-label mb-2" data-bs-toggle="collapse"
-                                data-bs-target="#custom_order">Or make custom order</label>
-                        </div>
-                        <div class="collapse" id="custom_order">
-                            <div class="row">
-                                <div class="col-md-12 form-group mb-3">
-                                    <input class="form-control" type="text" placeholder="Name" v-model="form.name">
-                                </div>
-                                <div class="col-md-12 form-group mb-3">
-                                    <input class="form-control" type="tel" placeholder="Phone" v-model="form.phone">
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="form-group mb-2">
-                            <select class="form-select" v-model="form.car_id" required>
-                                <option value="" disabled>Select Car</option>
-                                <option v-for="car in cars" :key="car.id" :value="car.id">
-                                    {{ car.name }} - {{ car.model }} ({{ car.daily_rent_price }}/- per day)
-                                </option>
-                            </select>
-                        </div>
-
-                        <div class="form-group mb-2">
-                            <input type="date" class="form-control" v-model="form.start_date" required>
-                        </div>
-
-                        <div class="form-group mb-2">
-                            <input type="date" class="form-control" v-model="form.end_date" required>
-                        </div>
-
-                        <div class="form-group mb-2">
-                            <select v-model="form.status">
-                                <option value="" disabled>Select Status</option>
-                                <option value="Pending">Pending</option>
-                                <option value="Ongoing">Ongoing</option>
-                                <option value="Completed">Completed</option>
-                                <option value="Cancelled">Cancelled</option>
-                            </select>
-                        </div>
-
-                        <div class="form-group mb-2">
-                            <input type="text" class="form-control" v-model="form.pickup_location"
-                                placeholder="Pickup Location">
-                        </div>
-                        <div class="form-group mb-2">
-                            <input type="text" class="form-control" v-model="form.drop_off_location"
-                                placeholder="Drop Off Location">
-                        </div>
-
-                        <div class="form-group mb-2">
-                            <input type="text" class="form-control" v-model="form.pickup_time"
-                                placeholder="Pickup Time">
-                        </div>
-
-                        <div class="form-group mb-2">
-                            <input type="text" class="form-control" v-model="form.drop_off_time"
-                                placeholder="Drop Off Time">
-                        </div>
-
-                        <button class="cmn-btn w-100">
-                            {{ form.id ? "Update Rental" : "Save Rental" }}
-                        </button>
-                    </form>
-                </div>
-            </div>
         </div>
     </div>
     <!-- rent list end -->

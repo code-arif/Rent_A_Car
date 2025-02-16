@@ -81,11 +81,14 @@ class RentalController extends Controller
             if ($rental_create) {
                 // Send Email to Admin
                 Mail::to('arifulislam6460@gmail.com')->send(new RentalCreated($rental_create));
-               
+
                 // Send Email to Logged-in User
                 Mail::to(Auth::guard('customer')->user()->email)->send(new RentalCreated($rental_create));
 
                 $data = ['message' => 'Rental created successfully', 'status' => true];
+                return redirect()->back()->with($data);
+            }else{
+                $data = ['message' => 'Please log in to preceed', 'status' => false];
                 return redirect()->back()->with($data);
             }
         } catch (Exception $e) {

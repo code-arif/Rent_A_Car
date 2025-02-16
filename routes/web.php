@@ -41,9 +41,9 @@ Route::group(['middleware' => AdminAuthMiddleware::class], function () {
         Route::post('/status-change/{id}', [CarManageController::class, 'changeCarStatus'])->name('change.car.status');
 
         //manage car details
-        Route::get('/details/save/{id?}',[CarManageController::class,'showSaveCarDetailsPage'])->name('show.save.car.details.page');
-        Route::post('/details/save',[CarManageController::class,'saveCarDetails'])->name('save.car.details');
-        Route::post('/details/update',[CarManageController::class,'updateCarDetails'])->name('update.car.details');
+        Route::get('/details/save/{id?}', [CarManageController::class, 'showSaveCarDetailsPage'])->name('show.save.car.details.page');
+        Route::post('/details/save', [CarManageController::class, 'saveCarDetails'])->name('save.car.details');
+        Route::post('/details/update', [CarManageController::class, 'updateCarDetails'])->name('update.car.details');
     });
 
     //====================customer management=====================//
@@ -63,9 +63,8 @@ Route::group(['middleware' => AdminAuthMiddleware::class], function () {
         Route::post('/status-change/{id}', [RentalManageController::class, 'changRentalStatus'])->name('change.rental.status');
     });
 
-    //========================order details ======================//
+    //========================rental details ======================//
     Route::get('rent/details/{id}', [RentalManageController::class, 'showRentDetails'])->name('show.order.details');
-
 });
 
 /*================================
@@ -77,7 +76,6 @@ Route::post('/user/login', [AuthController::class, 'UserLogin'])->name('user.log
 Route::get('/user/registration', [AuthController::class, 'ShowUserRegistration'])->name('show.user.registration');
 Route::post('/user/registration', [AuthController::class, 'UserRegistration'])->name('user.registration');
 Route::get('/user/logout', [AuthController::class, 'UserLogout'])->name('user.logout');
-
 
 // ===========================Home page===========================//
 Route::get('/', [HomeController::class, 'index'])->name('show.home');
@@ -93,10 +91,15 @@ Route::get('/about', [AboutController::class, 'about'])->name('show.about');
 Route::get('/contact', [ContactController::class, 'contact'])->name('show.contact');
 
 //============================Reltal Route===========================//
-Route::post('/create/rent', [RentalController::class, 'createRent'])->name('create.rent')->middleware(UserAuthMiddleware::class);
-Route::get('/rental/success', [RentalController::class, 'rentalSuccess'])->name('rental.success')->middleware(UserAuthMiddleware::class);;
+Route::group(['middleware' => UserAuthMiddleware::class], function () {
+    Route::post('/create/rent', [RentalController::class, 'createRent'])->name('create.rent');
+    Route::get('/rental/success', [RentalController::class, 'rentalSuccess'])->name('rental.success');
 
-//==========================User Dashboard===========================//
-Route::get('/user/dashboard', [UserDashboardController::class, 'showUserDashboard'])
-    ->name('show.user.dashboard')
-    ->middleware(UserAuthMiddleware::class);
+    //==========================User Dashboard===========================//
+    Route::get('/user/dashboard', [UserDashboardController::class, 'showUserDashboard'])->name('show.user.dashboard');
+    Route::get('/booking/history/{id}', [UserDashboardController::class, 'showBookingHistory'])->name('show.booking.history');
+    Route::patch('/rental/cancel/{id}', [UserDashboardController::class, 'cancelBooking'])->name('rental.cancel');
+    Route::get('/user/profile/{id}', [UserDashboardController::class,'showUserProfile'])->name('show.user.profile');
+    Route::post('/update/user/profile', [UserDashboardController::class,'updateUserProfile'])->name('update.user.profile');
+    Route::post('/update/user/password', [UserDashboardController::class,'updateUserPassword'])->name('update.user.password');
+});

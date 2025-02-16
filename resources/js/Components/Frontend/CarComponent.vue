@@ -1,10 +1,11 @@
 <script setup>
-import { usePage, Link, router } from '@inertiajs/vue3';
+import { usePage, Link, router, useForm } from '@inertiajs/vue3';
 import { ref, watch } from 'vue';
 
 const list = usePage();
 const cars = ref(list.props.cars.data || []);
 const links = ref(list.props.cars.links || []);
+const car_for_rent = list.props.car_for_rent;
 const selectedType = ref('');
 const searchQuery = ref('');
 
@@ -22,6 +23,60 @@ watch([selectedType, searchQuery], ([newType, newSearch]) => {
         }
     });
 });
+
+
+//=============================create rent ================================//
+const form = useForm({
+    id: null,
+    user_id: "",
+    car_id: "",
+    start_date: "",
+    end_date: "",
+    total_cost: "",
+    status: "",
+    pickup_location: "",
+    drop_off_location: "",
+    pickup_time: "",
+    drop_off_time: "",
+});
+
+const saveRent = () => {
+    form.post(route('create.rent'), {
+        onSuccess: () => {
+            if (list.props.flash.status === true) {
+                successToast(list.props.flash.message);
+                form.reset();
+            } else {
+                errorToast(list.props.flash.message);
+            }
+        },
+        onError: (errors) => {
+            if (errors.user_id) {
+                errorToast(errors.user_id);
+            } else if (errors.car_id) {
+                errorToast(errors.car_id);
+            } else if (errors.start_date) {
+                errorToast(errors.start_date);
+            } else if (errors.end_date) {
+                errorToast(errors.end_date);
+            } else if (errors.status) {
+                errorToast(errors.status);
+            } else if (errors.pickup_location) {
+                errorToast(errors.pickup_location);
+            } else if (errors.drop_off_location) {
+                errorToast(errors.drop_off_location);
+            } else if (errors.pickup_time) {
+                errorToast(errors.pickup_time);
+            } else if (errors.drop_off_time) {
+                errorToast(errors.drop_off_time);
+            }
+            else {
+                errorToast('An error occurred');
+            }
+        }
+    });
+};
+
 </script>
 
 
@@ -124,46 +179,42 @@ watch([selectedType, searchQuery], ([newType, newSearch]) => {
                 <div class="col-lg-4">
                     <aside class="sidebar">
                         <div class="widget widget-reservation">
-                            <h4 class="widget-title">reservation</h4>
+                            <h4 class="widget-title">Make your reservation</h4>
                             <div class="widget-body">
-                                <form class="car-search-form">
+                                <form class="car-search-form" @submit.prevent="saveRent">
                                     <div class="row">
                                         <div class="col-lg-12 form-group">
-                                            <select>
-                                                <option value="1" selected>Choose Your Car Type</option>
-                                                <option value="2">Another option</option>
-                                                <option value="4">Potato</option>
+                                            <select class="form-select" v-model="form.car_id" required>
+                                                <option value="" disabled>Select Car</option>
+                                                <option v-for="car in car_for_rent" :key="car.id" :value="car.id">
+                                                    {{ car.name }} - {{ car.model }} ({{ car.daily_rent_price }}/- per
+                                                    day)
+                                                </option>
                                             </select>
                                         </div>
                                         <div class="form-group col-md-12">
-                                            <i class="fa fa-map-marker"></i>
                                             <input class="form-control has-icon" type="text"
-                                                placeholder="Pickup Location">
+                                                placeholder="Pickup Location" v-model="form.pickup_location">
                                         </div>
                                         <div class="form-group col-md-12">
                                             <i class="fa fa-map-marker"></i>
                                             <input class="form-control has-icon" type="text"
-                                                placeholder="Drop Off Location">
+                                                placeholder="Drop Off Location" v-model="form.drop_off_location">
                                         </div>
                                         <div class="form-group col-md-12">
-                                            <i class="fa fa-calendar"></i>
-                                            <input type='text' class='form-control has-icon datepicker-here'
-                                                data-language='en' placeholder="Pickup Date">
+                                            <input type='date' class='form-control' v-model="form.start_date">
+                                        </div>
+                                        <div class="form-group col-md-12">
+                                            <input type="date" class="form-control" v-model="form.end_date">
+                                        </div>
+                                        <div class="form-group col-md-12">
+                                            <input type='text' class='form-control' placeholder="Pick up Time"
+                                                v-model="form.pickup_time">
                                         </div>
                                         <div class="form-group col-md-12">
                                             <i class="fa fa-clock-o"></i>
-                                            <input type="text" name="timepicker"
-                                                class="form-control has-icon timepicker" placeholder="Pickup Time">
-                                        </div>
-                                        <div class="form-group col-md-12">
-                                            <i class="fa fa-calendar"></i>
-                                            <input type='text' class='form-control has-icon datepicker-here'
-                                                data-language='en' placeholder="Drop Off Date">
-                                        </div>
-                                        <div class="form-group col-md-12">
-                                            <i class="fa fa-clock-o"></i>
-                                            <input type="text" name="timepicker"
-                                                class="form-control has-icon timepicker" placeholder="Drop Off Time">
+                                            <input type="text" class="form-control" placeholder="Drop Off Time"
+                                                v-model="form.drop_off_time">
                                         </div>
                                     </div>
                                     <button type="submit" class="cmn-btn">Reservation</button>

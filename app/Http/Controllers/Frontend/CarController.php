@@ -29,9 +29,12 @@ class CarController extends Controller
 
         // Paginate the results
         $cars = $query->orderBy('id', 'desc')->paginate(3);
+        $car_for_rent = Car::select('id', 'name', 'daily_rent_price', 'model')->where('status', 1)->where('availability', 'Available')->get();
+
 
         return Inertia::render('Frontend/CarPage', [
             'cars' => $cars,
+            'car_for_rent' => $car_for_rent,
         ]);
     }
 

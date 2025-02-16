@@ -43,7 +43,7 @@ class AuthController extends Controller
                 'password.min' => 'Password must be at least 4 characters',
                 'password.confirmed' => 'Password and confirm password do not match',
                 'phone.required' => 'Please enter your phone number',
-                'phone.digits' => 'Phone number must be 10 digits',
+                'phone.digits' => 'Phone number must be 11 digits',
                 'phone.starts_with' => 'Phone number must start with 01',
                 'phone.regex' => 'Please enter a valid phone number',
                 'phone.unique' => 'This phone number is already taken',

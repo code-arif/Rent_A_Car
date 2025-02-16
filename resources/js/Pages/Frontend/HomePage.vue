@@ -3,6 +3,7 @@ import { Head } from '@inertiajs/vue3';
 import GuestLayout from '@/Layouts/GuestLayout.vue';
 import HeroComponent from '../../Components/Frontend/HeroComponent.vue';
 import AwesomeCarComponent from '../../Components/Frontend/AwesomeCarComponent.vue';
+import CounterComponent from '../../Components/Frontend/Home/CounterComponent.vue';
 
 </script>
 
@@ -14,6 +15,7 @@ import AwesomeCarComponent from '../../Components/Frontend/AwesomeCarComponent.v
     <GuestLayout>
         <HeroComponent />
         <AwesomeCarComponent />
+        <CounterComponent />
     </GuestLayout>
 </template>
 
