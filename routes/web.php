@@ -49,7 +49,7 @@ Route::group(['middleware' => AdminAuthMiddleware::class], function () {
     //====================customer management=====================//
     Route::group(['prefix' => 'customer'], function () {
         Route::get('/list', [CustomerController::class, 'showCustomerList'])->name('show.customer.list');
-        Route::post('/delete/{id}', [CustomerController::class, 'deleteCustomer'])->name('delete.customer');
+        Route::delete('/delete/{id}', [CustomerController::class, 'deleteCustomer'])->name('delete.customer');
         Route::get('/rent/history/{id}', [CustomerController::class, 'rentalHistoryForThisCustomer'])->name('show.rental.history.for.cus');
     });
 
@@ -96,10 +96,15 @@ Route::group(['middleware' => UserAuthMiddleware::class], function () {
     Route::get('/rental/success', [RentalController::class, 'rentalSuccess'])->name('rental.success');
 
     //==========================User Dashboard===========================//
-    Route::get('/user/dashboard', [UserDashboardController::class, 'showUserDashboard'])->name('show.user.dashboard');
     Route::get('/booking/history/{id}', [UserDashboardController::class, 'showBookingHistory'])->name('show.booking.history');
     Route::patch('/rental/cancel/{id}', [UserDashboardController::class, 'cancelBooking'])->name('rental.cancel');
     Route::get('/user/profile/{id}', [UserDashboardController::class,'showUserProfile'])->name('show.user.profile');
     Route::post('/update/user/profile', [UserDashboardController::class,'updateUserProfile'])->name('update.user.profile');
     Route::post('/update/user/password', [UserDashboardController::class,'updateUserPassword'])->name('update.user.password');
+});
+
+
+//404 page
+Route::fallback(function () {
+    return Inertia::render('Frontend/404Page'); // Render 404 component
 });

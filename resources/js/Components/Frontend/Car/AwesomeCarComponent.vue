@@ -3,6 +3,19 @@ import { usePage, Link } from '@inertiajs/vue3';
 
 const list = usePage();
 const cars = list.props.cars || [];
+
+// Helper function to determine rental status
+const getRentalStatus = (car) => {
+    // If no rentals or all rentals are 'Cancelled' or 'Completed', it's available
+    if (!car.rentals.length || car.rentals.every(rental => ['Cancelled', 'Completed'].includes(rental.status))) {
+        return { label: 'Available', color: 'green' };
+    }
+
+    // If any rental is 'Pending' or 'Ongoing', show 'Processing'
+    return car.rentals.some(rental => ['Pending', 'Ongoing'].includes(rental.status))
+        ? { label: 'Processing', color: 'orange' }
+        : { label: 'Booked', color: 'red' };
+};
 </script>
 
 <template>
@@ -37,7 +50,14 @@ const cars = list.props.cars || [];
                                     }}
                                 </p>
 
-                                <Link :href="route('show.car.details', { id: car.id })" class="cmn-btn">rent car</Link>
+                                <div class="row">
+                                    <Link :href="route('show.car.details', { id: car.id })" class="cmn-btn">rent car
+                                    </Link>
+                                    <p class="cmn-btn ml-2" :style="{ backgroundColor: getRentalStatus(car).color }">
+                                        {{ getRentalStatus(car).label }}
+                                    </p>
+                                </div>
+
                             </div>
                             <div class="car-item-meta">
                                 <ul class="details-list">

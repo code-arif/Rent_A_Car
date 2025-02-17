@@ -12,12 +12,6 @@ use Illuminate\Support\Facades\Hash;
 
 class UserDashboardController extends Controller
 {
-    //====================show user dashboard===================//
-    public function showUserDashboard()
-    {
-        return Inertia::render('Frontend/Dashboard/UserDashboardPage');
-    }
-
     //===================show user booking history=================//
     public function showBookingHistory($id)
     {

@@ -29,4 +29,12 @@ class CustomerController extends Controller
             'rents' => $rent_history->rents ?? [],
         ]);
     }
+
+    //=====================delete customer =====================//
+    public function deleteCustomer($id){
+        $customer = User::where('role', 'customer')->findOrFail($id);
+        $customer->delete();
+
+        return redirect()->back()->with('message', 'Customer deleted successfully');
+    }
 }

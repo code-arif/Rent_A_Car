@@ -28,7 +28,7 @@ const authUser = usePage().props.authCustomer.customer;
                             </li>
                         </ul>
                         <div class="header-action d-flex align-items-center justify-content-between">
-                            <Link v-if="authUser" :href="route('show.user.dashboard')" class="cmn-outline-btn uppercase mr-3">Dashboard</Link>
+                            <Link v-if="authUser" :href="route('show.user.profile', {id:authUser.id})" class="cmn-outline-btn uppercase mr-3">Dashboard</Link>
                             <Link v-if="authUser" :href="route('user.logout')" class="cmn-btn uppercase">Logout</Link>
                             <Link v-if="!authUser" :href="route('show.user.login')" class="cmn-btn uppercase">LOG IN</Link>
                         </div>

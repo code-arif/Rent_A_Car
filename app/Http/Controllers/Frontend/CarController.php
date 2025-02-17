@@ -12,7 +12,7 @@ class CarController extends Controller
     //============================car page =============================//
     public function CarPage(Request $request)
     {
-        $query = Car::where('status', 1)->with('detail');
+        $query = Car::where('status', 1)->with('detail', 'rentals');
 
         // Filter by car type if provided
         if ($request->has('car_type') && $request->car_type) {
@@ -32,7 +32,7 @@ class CarController extends Controller
         $car_for_rent = Car::select('id', 'name', 'daily_rent_price', 'model')->where('status', 1)->where('availability', 'Available')->get();
 
 
-        return Inertia::render('Frontend/CarPage', [
+        return Inertia::render('Frontend/CarsPage', [
             'cars' => $cars,
             'car_for_rent' => $car_for_rent,
         ]);

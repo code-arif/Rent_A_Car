@@ -10,6 +10,17 @@ const car_for_rent = list.props.car_for_rent;
 const selectedType = ref('');
 const searchQuery = ref('');
 
+// Helper function to determine rental status
+const getRentalStatus = (car) => {
+    if (!car.rentals.length || car.rentals.every(rental => ['Cancelled', 'Completed'].includes(rental.status))) {
+        return { label: 'Available', color: 'green' };
+    }
+
+    return car.rentals.some(rental => ['Pending', 'Ongoing'].includes(rental.status))
+        ? { label: 'Processing', color: 'orange' }
+        : { label: 'Booked', color: 'red' };
+};
+
 // Watch for changes in selectedType and searchQuery
 watch([selectedType, searchQuery], ([newType, newSearch]) => {
     router.get(route('car.page'), {
@@ -151,8 +162,15 @@ const saveRent = () => {
                                                 : car.detail?.short_description
                                             }}
                                         </p>
-                                        <Link :href="route('show.car.details', { id: car.id })" class="cmn-btn">rent car
-                                        </Link>
+                                        <div class="row">
+                                            <Link :href="route('show.car.details', { id: car.id })" class="cmn-btn">rent
+                                            car
+                                            </Link>
+                                            <p class="cmn-btn ml-2"
+                                                :style="{ backgroundColor: getRentalStatus(car).color }">
+                                                {{ getRentalStatus(car).label }}
+                                            </p>
+                                        </div>
                                     </div>
                                     <div class="car-item-meta">
                                         <ul class="details-list">

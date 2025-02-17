@@ -1,6 +1,6 @@
 <script setup>
 import { ref, computed } from "vue";
-import { usePage, Link, router } from "@inertiajs/vue3";
+import { usePage, router } from "@inertiajs/vue3";
 
 // ===================== Customer List ===================== //
 const list = usePage();
@@ -36,7 +36,7 @@ const searchField = ref(["name", "email", "phone"]);
 //========================customer delete functionality========================//
 const deleteCustomer = (id) => {
     if (confirm("Are you sure to delete this customer?")) {
-        router.post(route("delete.customer", {
+        router.delete(route("delete.customer", {
             id: id
         }), {
             preserveScroll: true,
@@ -44,7 +44,7 @@ const deleteCustomer = (id) => {
                 successToast(list.props.flash.message);
             },
             onError: () => {
-                errorToast(list.props.flash.message);
+                errorToast('Failed to delete customer');
             }
         });
     }

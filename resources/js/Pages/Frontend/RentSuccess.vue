@@ -1,5 +1,6 @@
 <script setup>
-import { Link } from '@inertiajs/vue3';
+import { Link, usePage, Head } from '@inertiajs/vue3';
+const authUser = usePage().props.authCustomer.customer;
 </script>
 
 <template>
@@ -15,7 +16,7 @@ import { Link } from '@inertiajs/vue3';
         <h3 class="text-success mt-5">Rent Completed Successfully!</h3>
 
         <div class="mt-5">
-            <Link :href="route('show.user.dashboard')" class="cmn-btn">Track Your Rent</Link>
+            <Link :href="route('show.booking.history', {id:authUser.id})" class="cmn-btn">Track Your Rent</Link>
         </div>
     </div>
 

@@ -12,5 +12,11 @@ class Car extends Model
     public function detail(){
         return $this->hasOne(CarDetails::class);
     }
+
+    // Relationship with Rental
+    public function rentals()
+    {
+        return $this->hasMany(Rental::class);
+    }
 }
 

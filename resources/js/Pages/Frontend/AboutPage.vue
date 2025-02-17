@@ -1,4 +1,5 @@
 <script setup>
+import { Head } from '@inertiajs/vue3';
 import GuestLayout from '@/Layouts/GuestLayout.vue';
 import AboutComponent from '../../Components/Frontend/About/AboutComponent.vue';
 </script>
