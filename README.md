@@ -5,7 +5,7 @@ A complete **Car Renting System** built using **Laravel**, **Vue.js**, and **Ine
 ## 📌 Features
 
 ### 🧑‍💼 Customer
-- **Car Rental Creation**: Customers can rent a car by creating a rental request.
+- **Car Rental Creation**: Customers can rent a car by creating a rental request. The request includes the car name, rental duration , and additional data. After submitting the request, confirmation email will be sent to the customer. 
 - **Authentication**: Secure login and registration for customers.
 - **Access Control**: Customers must be logged in to create a rental.
 - **Rental Tracking**: Customers can track their rental status from the dashboard.
@@ -55,11 +55,6 @@ DB_USERNAME=your_username
 DB_PASSWORD=your_password
 ```
 
-5. **Run Migrations:**
-```bash
-php artisan migrate --seed
-```
-
 6. **Build Frontend:**
 ```bash
 npm run build
@@ -69,12 +64,6 @@ npm run build
 ```bash
 php artisan serve
 ```
-
-## 🔐 Admin Access
-
-- **Default Admin Credentials:**
-  - Email: `admin@example.com`
-  - Password: `password`
 
 ## 📄 Usage
 
@@ -88,8 +77,8 @@ php artisan serve
 ```
 ├── app/          # Laravel Backend
 ├── resources/    # Vue.js Frontend
-├── routes/       # Web & API Routes
-└── database/     # Migrations & Seeders
+├── routes/       # Web Routes
+└── database/     # Migrations
 ```
 
 ## 🤝 Contributions
@@ -97,9 +86,9 @@ php artisan serve
 Contributions are welcome! Feel free to submit a Pull Request or open an issue.
 
 ## 📧 Contact
-For questions or feedback, reach out to: [your-email@example.com](mailto:your-email@example.com)
+For questions or feedback, reach out to: [arifulislam6460@gmail.com](arifulislam6460@gmail.com)
 
 ---
 
-**© 2023 Car Renting System - Built with Laravel, Vue.js, and Inertia.js**
+**© 2025 Car Renting System: CODEARIF - Built with Laravel, Vue.js, and Inertia.js**
 
