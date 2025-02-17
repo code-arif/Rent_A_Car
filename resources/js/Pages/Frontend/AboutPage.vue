@@ -1,6 +1,6 @@
 <script setup>
 import GuestLayout from '@/Layouts/GuestLayout.vue';
-import AboutComponent from '../../Components/Frontend/AboutComponent.vue';
+import AboutComponent from '../../Components/Frontend/About/AboutComponent.vue';
 </script>
 
 <template>

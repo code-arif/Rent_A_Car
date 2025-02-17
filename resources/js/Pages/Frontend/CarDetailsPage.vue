@@ -2,6 +2,7 @@
 import { ref } from 'vue';
 import GuestLayout from '@/Layouts/GuestLayout.vue';
 import { usePage, Head, Link, useForm, router } from '@inertiajs/vue3';
+const authUser = usePage().props.authCustomer.customer;
 
 const list = usePage();
 
@@ -31,6 +32,8 @@ const createRent = () => {
             if (list.props.flash.status === true) {
                 successToast(list.props.flash.message);
                 router.visit(route('rental.success'));
+            } else if (!authUser) {
+                errorToast('Please login to rent a car');
             } else {
                 errorToast(list.props.flash.message);
             }

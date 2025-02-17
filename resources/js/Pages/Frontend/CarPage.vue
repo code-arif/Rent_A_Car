@@ -1,6 +1,6 @@
 <script setup>
 import GuestLayout from '@/Layouts/GuestLayout.vue';
-import CarComponent from '../../Components/Frontend/CarComponent.vue';
+import CarComponent from '../../Components/Frontend/Car/CarComponent.vue';
 </script>
 
 <template>

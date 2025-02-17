@@ -59,8 +59,8 @@ Route::group(['middleware' => AdminAuthMiddleware::class], function () {
         Route::get('/save/{id?}', [RentalManageController::class, 'showRentalSave'])->name('show.rental.save');
         Route::post('/store', [RentalManageController::class, 'rentalStore'])->name('store.rental');
         Route::post('/update/{id}', [RentalManageController::class, 'updateRental'])->name('update.rental');
-        Route::post('/delete/{id}', [RentalManageController::class, 'deleteRental'])->name('delete.rental');
-        Route::post('/status-change/{id}', [RentalManageController::class, 'changRentalStatus'])->name('change.rental.status');
+        Route::delete('/delete/{id}', [RentalManageController::class, 'deleteRental'])->name('delete.rental');
+        Route::put('/status-change/{id}', [RentalManageController::class, 'changRentalStatus'])->name('change.rental.status');
     });
 
     //========================rental details ======================//

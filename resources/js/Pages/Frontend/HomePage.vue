@@ -1,8 +1,8 @@
 <script setup>
 import { Head } from '@inertiajs/vue3';
 import GuestLayout from '@/Layouts/GuestLayout.vue';
-import HeroComponent from '../../Components/Frontend/HeroComponent.vue';
-import AwesomeCarComponent from '../../Components/Frontend/AwesomeCarComponent.vue';
+import HeroComponent from '../../Components/Frontend/Home/HeroComponent.vue';
+import AwesomeCarComponent from '../../Components/Frontend/Car/AwesomeCarComponent.vue';
 import CounterComponent from '../../Components/Frontend/Home/CounterComponent.vue';
 
 </script>

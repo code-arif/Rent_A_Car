@@ -4,24 +4,20 @@ namespace App\Mail;
 
 use App\Models\Rental;
 use Illuminate\Bus\Queueable;
+use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Mail\Mailables\Content;
-use Illuminate\Queue\SerializesModels;
 use Illuminate\Mail\Mailables\Envelope;
-use Illuminate\Contracts\Queue\ShouldQueue;
+use Illuminate\Queue\SerializesModels;
 
-class RentalCreated extends Mailable
+class RentalCreatedForCustomer extends Mailable
 {
     use Queueable, SerializesModels;
 
-    public $rental; // Public property to hold rental data
-
-    /**
-     * Create a new message instance.
-     */
+    public $rental;
     public function __construct(Rental $rental)
     {
-        $this->rental = $rental; // Pass rental data to mailable
+        $this->rental = $rental;
     }
 
     /**
@@ -30,7 +26,7 @@ class RentalCreated extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Rental Created',
+            subject: 'Rental Created For Customer',
         );
     }
 
@@ -40,7 +36,7 @@ class RentalCreated extends Mailable
     public function content(): Content
     {
         return new Content(
-            view: 'emails.rental.rental_created',
+            view: 'emails.rental.rental_mail_for_customer',
         );
     }
 

@@ -1,6 +1,7 @@
 <script setup>
 import { usePage, Link, router, useForm } from '@inertiajs/vue3';
 import { ref, watch } from 'vue';
+const authUser = usePage().props.authCustomer.customer;
 
 const list = usePage();
 const cars = ref(list.props.cars.data || []);
@@ -46,6 +47,9 @@ const saveRent = () => {
             if (list.props.flash.status === true) {
                 successToast(list.props.flash.message);
                 form.reset();
+                router.visit(route('rental.success'));
+            } else if (!authUser) {
+                errorToast('Please login to rent a car');
             } else {
                 errorToast(list.props.flash.message);
             }

@@ -2,15 +2,16 @@
 
 namespace App\Http\Controllers\Frontend;
 
+use Exception;
 use App\Models\Car;
 use Inertia\Inertia;
 use App\Models\Rental;
-use App\Mail\RentalCreated;
 use Illuminate\Http\Request;
+use App\Mail\RentalCreatedForAdmin;
 use App\Http\Controllers\Controller;
-use Exception;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
+use App\Mail\RentalCreatedForCustomer;
 
 class RentalController extends Controller
 {
@@ -75,24 +76,20 @@ class RentalController extends Controller
             // Create Rental Record
             $rental_create = Rental::create($validated_data);
 
-            // Ensure user data is loaded
             $rental_create->load('user');
 
             if ($rental_create) {
                 // Send Email to Admin
-                Mail::to('arifulislam6460@gmail.com')->send(new RentalCreated($rental_create));
+                Mail::to('arifulislam6460@gmail.com')->send(new RentalCreatedForAdmin($rental_create));
 
                 // Send Email to Logged-in User
-                Mail::to(Auth::guard('customer')->user()->email)->send(new RentalCreated($rental_create));
+                Mail::to(Auth::guard('customer')->user()->email)->send(new RentalCreatedForCustomer($rental_create));
 
                 $data = ['message' => 'Rental created successfully', 'status' => true];
                 return redirect()->back()->with($data);
-            }else{
-                $data = ['message' => 'Please log in to preceed', 'status' => false];
-                return redirect()->back()->with($data);
             }
         } catch (Exception $e) {
-            $data = ['message' => $e->getMessage(), 'status' => false];
+            $data = ['message' => 'Please log in to preceed', 'status' => false];
             return redirect()->back()->with($data);
         }
     }

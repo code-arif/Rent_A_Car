@@ -1,7 +1,8 @@
 <script setup>
-import { usePage, useForm, Link } from '@inertiajs/vue3';
+import { usePage, useForm, Link, router } from '@inertiajs/vue3';
 const list = usePage();
 const car_for_rent = list.props.car_for_rent;
+const authUser = usePage().props.authCustomer.customer;
 
 //=============================create rent ================================//
 const form = useForm({
@@ -24,7 +25,11 @@ const saveRent = () => {
             if (list.props.flash.status === true) {
                 successToast(list.props.flash.message);
                 form.reset();
-            } else {
+                router.visit(route('rental.success'));
+            } else if (!authUser) {
+                errorToast('Please login to rent a car');
+            }
+            else {
                 errorToast(list.props.flash.message);
             }
         },
@@ -99,12 +104,12 @@ const saveRent = () => {
                             </div>
                             <div class="row">
                                 <div class="form-group col-xl-6">
-                                    <input type='text' class='form-control'
-                                        placeholder="Pick up Time" v-model="form.pickup_time">
+                                    <input type='text' class='form-control' placeholder="Pick up Time"
+                                        v-model="form.pickup_time">
                                 </div>
                                 <div class="form-group col-xl-6">
-                                    <input type="text" class="form-control"
-                                        placeholder="Drop Off Time" v-model="form.drop_off_time">
+                                    <input type="text" class="form-control" placeholder="Drop Off Time"
+                                        v-model="form.drop_off_time">
                                 </div>
                             </div>
                             <button type="submit" class="cmn-btn">Reservation</button>

@@ -122,10 +122,9 @@ const saveRent = () => {
 //========================rent delete functionality========================//
 const deleteRent = (id) => {
     if (confirm("Are you sure to delete this rent?")) {
-        router.post(route("delete.rental", {
+        router.delete(route("delete.rental", {
             id: id
         }), {
-            preserveScroll: true,
             onSuccess: () => {
                 successToast(list.props.flash.message);
             },
@@ -135,6 +134,22 @@ const deleteRent = (id) => {
         });
     }
 }
+
+//=====================rent status change functionality=====================//
+// Status dropdown visibility
+const showDropdown = ref(null);
+
+// Update rent status function
+const updateRentStatus = (id, status) => {
+    router.put(route('change.rental.status', { id }), { status }, {
+        onSuccess: () => {
+            successToast(list.props.flash.message);
+            showDropdown.value = null;
+        },
+    });
+};
+
+
 
 </script>
 
@@ -154,6 +169,73 @@ const deleteRent = (id) => {
     <!-- rent list start -->
     <div class="container-fluid pt-4 px-4">
         <div class="row g-4 mb-3">
+
+            <!-- rent table start -->
+            <div class="col-sm-12 col-xl-12">
+                <div class="rounded p-4" style="border: 1px solid #19cb00;">
+                    <div class="d-flex justify-content-between mb-3 align-item-center">
+                        <div>
+                            <h6>All Rent is here</h6>
+                        </div>
+                        <div>
+                            <input placeholder="Search..." class="form-control w-auto form-control-sm" type="text"
+                                v-model="searchValue">
+                        </div>
+                    </div>
+
+                    <div class="table-responsive">
+                        <EasyDataTable buttons-pagination alternating :headers="Header" :items="Item" border-cell
+                            theme-color="#19cb00" :rows-per-page="15" :search-field="searchField"
+                            :search-value="searchValue">
+                            <template #item-image="{ image }">
+                                <img :src="image ? `/storage/${image}` :
+                                    'https://skala.or.id/wp-content/uploads/2024/01/dummy-post-square-1-1.jpg'"
+                                    alt="Brand Logo" style="width: 50px; height: 50px; object-fit: cover;" class="p-1">
+                            </template>
+                            <template #item-status="{ status, id }">
+                                <div class="dropdown" @mouseleave="showDropdown = null">
+                                    <button @click="showDropdown = showDropdown === id ? null : id" :class="{
+                                        'btn btn-sm': true,
+                                        'btn-success': status === 'Completed',
+                                        'btn-warning': status === 'Pending',
+                                        'btn-info': status === 'Ongoing',
+                                        'btn-danger': status === 'Cancelled',
+                                    }">
+                                        {{ status }}
+                                    </button>
+                                    <div v-if="showDropdown === id" class="dropdown-menu show">
+                                        <button class="dropdown-item"
+                                            @click="updateRentStatus(id, 'Pending')">Pending</button>
+                                        <button class="dropdown-item"
+                                            @click="updateRentStatus(id, 'Ongoing')">Ongoing</button>
+                                        <button class="dropdown-item"
+                                            @click="updateRentStatus(id, 'Completed')">Completed</button>
+                                        <button class="dropdown-item"
+                                            @click="updateRentStatus(id, 'Cancelled')">Cancelled</button>
+                                    </div>
+                                </div>
+                            </template>
+                            <template #item-number="{ id, user_id, car_id, start_date, end_date, status, name, phone }">
+                                <div class="d-flex justify-content-center align-items-center">
+                                    <Link :href="route('show.order.details', { id: id })"
+                                        class="btn btn-sm btn-outline-info mr-2">
+                                    <i class="fa fa-info"></i>
+                                    </Link>
+                                    <button class="btn btn-sm btn-outline-primary"
+                                        @click="setEditRent({ id, user_id, car_id, start_date, end_date, status, name, phone })"
+                                        style="margin-right: 5px;">
+                                        <i class="fa fa-edit"></i>
+                                    </button>
+                                    <button class="btn btn-sm btn-outline-danger" @click="deleteRent(id)">
+                                        <i class="fa fa-trash"></i>
+                                    </button>
+                                </div>
+                            </template>
+                        </EasyDataTable>
+                    </div>
+                </div>
+            </div>
+            <!-- rent table end -->
 
             <!-- Rent Form start -->
             <div class="col-sm-12 col-xl-12 mb-4">
@@ -236,61 +318,6 @@ const deleteRent = (id) => {
             </div>
             <!-- Rent form end -->
 
-            <!-- rent table start -->
-            <div class="col-sm-12 col-xl-12">
-                <div class="rounded p-4" style="border: 1px solid #19cb00;">
-                    <div class="d-flex justify-content-between mb-3 align-item-center">
-                        <div>
-                            <h6>All Rent is here</h6>
-                        </div>
-                        <div>
-                            <input placeholder="Search..." class="form-control w-auto form-control-sm" type="text"
-                                v-model="searchValue">
-                        </div>
-                    </div>
-
-                    <div class="table-responsive">
-                        <EasyDataTable buttons-pagination alternating :headers="Header" :items="Item" border-cell
-                            theme-color="#19cb00" :rows-per-page="15" :search-field="searchField"
-                            :search-value="searchValue">
-                            <template #item-image="{ image }">
-                                <img :src="image ? `/storage/${image}` :
-                                    'https://skala.or.id/wp-content/uploads/2024/01/dummy-post-square-1-1.jpg'"
-                                    alt="Brand Logo" style="width: 50px; height: 50px; object-fit: cover;" class="p-1">
-                            </template>
-                            <template #item-status="{ status, id }">
-                                <button :class="{
-                                    'btn btn-sm': true,
-                                    'btn-success': status === 'Completed',
-                                    'btn-warning': status === 'Pending',
-                                    'btn-info': status === 'Ongoing',
-                                    'btn-danger': status === 'Cancelled',
-                                }">
-                                    {{ status }}
-                                </button>
-                            </template>
-                            <template #item-number="{ id, user_id, car_id, start_date, end_date, status, name, phone }">
-                                <div class="d-flex justify-content-center align-items-center">
-                                    <Link :href="route('show.order.details', { id: id })"
-                                        class="btn btn-sm btn-outline-info mr-2">
-                                    <i class="fa fa-info"></i>
-                                    </Link>
-                                    <button class="btn btn-sm btn-outline-primary"
-                                        @click="setEditRent({ id, user_id, car_id, start_date, end_date, status, name, phone })"
-                                        style="margin-right: 5px;">
-                                        <i class="fa fa-edit"></i>
-                                    </button>
-                                    <button class="btn btn-sm btn-outline-danger" @click="deleteRent(id)">
-                                        <i class="fa fa-trash"></i>
-                                    </button>
-                                </div>
-                            </template>
-                        </EasyDataTable>
-                    </div>
-                </div>
-            </div>
-            <!-- rent table end -->
-
         </div>
     </div>
     <!-- rent list end -->
@@ -299,25 +326,29 @@ const deleteRent = (id) => {
 <style scoped>
 .completed-btn {
     background-color: #28a745;
-    /* Green */
     color: white;
 }
 
 .pending-btn {
     background-color: #ffc107;
-    /* Yellow/Orange */
     color: black;
 }
 
 .ongoing-btn {
     background-color: #17a2b8;
-    /* Blue */
     color: white;
 }
 
 .cancelled-btn {
     background-color: #dc3545;
-    /* Red */
     color: white;
+}
+
+.dropdown-menu {
+    position: absolute;
+    background-color: white;
+    border: 1px solid #ccc;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+    z-index: 1000;
 }
 </style>

@@ -171,7 +171,7 @@ class RentalManageController extends Controller
         $rental->delete();
 
         if ($rental) {
-            $data = ['message' => 'Rent deleted successfully', 'status' => true, 'code' => 200];
+            $data = ['message' => 'Rent deleted successfully'];
             return redirect()->back()->with($data);
         }
     }
@@ -183,5 +183,21 @@ class RentalManageController extends Controller
         return Inertia::render('Admin/Rental/RentDetailsPage', [
             'rental_details' => $rental_details,
         ]);
+    }
+
+    //=============================change rent status=============================//
+    public function changRentalStatus(Request $request, $id)
+    {
+        // Validate the incoming request
+        $request->validate([
+            'status' => 'required|in:Pending,Ongoing,Completed,Cancelled',
+        ]);
+        // Find the rent record by ID
+        $rent = Rental::findOrFail($id);
+
+        // Update the status
+        $rent->update(['status' => $request->status]);
+
+        return redirect()->back()->with('message', 'Status updated successfully');
     }
 }
