@@ -171,7 +171,7 @@ const updateRentStatus = (id, status) => {
         <div class="row g-4 mb-3">
 
             <!-- rent table start -->
-            <div class="col-sm-12 col-xl-12">
+            <div class="col-sm-12 col-xl-12 mb-4">
                 <div class="rounded p-4" style="border: 1px solid #19cb00;">
                     <div class="d-flex justify-content-between mb-3 align-item-center">
                         <div>
@@ -238,7 +238,7 @@ const updateRentStatus = (id, status) => {
             <!-- rent table end -->
 
             <!-- Rent Form start -->
-            <div class="col-sm-12 col-xl-12 mb-4">
+            <div class="col-sm-12 col-xl-12">
                 <div class="rounded h-100 p-4" style="border: 1px solid #ddd;">
                     <h6>{{ form.id ? "Edit Rental" : "Create Rental" }}</h6>
                     <hr>

@@ -451,7 +451,7 @@ d-flex {
 }
 
 .header-section .header-top {
-    background-color: transparent;
+    /* background-color: transparent; */
     padding: 20px;
 }
 
@@ -479,7 +479,7 @@ d-flex {
 }
 
 .header-section .header-top .social-links li a:hover {
-    background-color: #19cb00;
+    /* background-color: #19cb00; */
     color: #ffffff;
     border-color: #19cb00;
 }
@@ -507,10 +507,6 @@ d-flex {
     .header-section .header-bottom .site-logo img {
         height: 45px;
     }
-}
-
-.header-section .header-bottom .navbar-collapse {
-    background-color: #19cb00;
 }
 
 @media (max-width: 767px) {

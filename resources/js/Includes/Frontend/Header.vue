@@ -4,7 +4,7 @@ const authUser = usePage().props.authCustomer.customer;
 </script>
 
 <template>
-    <header class="header-section header-section--style2 bg-dark">
+    <header class="header-section bg-dark">
         <div class="header-bottom">
             <div class="container">
                 <nav class="navbar navbar-expand-lg p-0">
@@ -14,8 +14,8 @@ const authUser = usePage().props.authCustomer.customer;
 
                     <div class="collapse navbar-collapse">
                         <ul class="navbar-nav main-menu m-auto">
-                            <li class="">
-                                <Link :href="route('show.home')"  :class="{ 'active': $page.url === '/' }">Home</Link>
+                            <li class="nav-item">
+                                <Link :href="route('show.home')">Home</Link>
                             </li>
                             <li>
                                 <Link :href="route('car.page')">Cars</Link>
@@ -39,4 +39,9 @@ const authUser = usePage().props.authCustomer.customer;
     </header>
 </template>
 
-<style scoped></style>
+<style scoped>
+.header_nav{
+    color: red;
+    /* border-bottom: 1px solid red; */
+}
+</style>

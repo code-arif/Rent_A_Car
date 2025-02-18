@@ -31,7 +31,7 @@ const Item = computed(() => {
         year: car.year,
         car_type: car.car_type,
         daily_rent_price: car.daily_rent_price,
-        weekly_rent_price: car.weekly_rent_price,
+        weekly_rent_price: car.weekly_rent_price ?? "N/A",
         availability: car.availability,
         status: car.status == 1 ? "Active" : "Inactive",
         id: car.id,
