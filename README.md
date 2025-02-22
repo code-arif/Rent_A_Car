@@ -4,6 +4,8 @@ A complete **Car Renting System** built using **Laravel**, **Vue.js**, and **Ine
 
 ### 📷 Video For Assignment(short video)
 - **Assingment**: https://drive.google.com/file/d/1tLQyvnjyp4BPcaBEa51i2RJrwkatXCjA/view?usp=sharing
+
+### 📺 Project Overview (full reivew video)
 - **Full Review Video**: https://drive.google.com/file/d/1tLQyvnjyp4BPcaBEa51i2RJrwkatXCjA/view?usp=sharing
 
 ## 📌 Features
