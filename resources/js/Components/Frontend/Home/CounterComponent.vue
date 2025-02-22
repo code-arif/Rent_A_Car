@@ -16,7 +16,7 @@ const customer_count = list.props.customer_count || [];
                             <i class="fa fa-car"></i>
                         </div>
                         <div class="content">
-                            <span class="counter">{{ car_count }}</span>
+                            <span class="counter">{{ car_count ?? 0 }}</span>
                             <span class="title">total car</span>
                         </div>
                     </div>
@@ -27,7 +27,7 @@ const customer_count = list.props.customer_count || [];
                             <i class="fa fa-users"></i>
                         </div>
                         <div class="content">
-                            <span class="counter">{{ customer_count }}</span>
+                            <span class="counter">{{ customer_count ?? 0 }}</span>
                             <span class="title">happy customer</span>
                         </div>
                     </div>

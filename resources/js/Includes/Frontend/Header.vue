@@ -8,7 +8,7 @@ const authUser = usePage().props.authCustomer.customer;
         <div class="header-bottom">
             <div class="container">
                 <nav class="navbar navbar-expand-lg p-0">
-                    <Link href="" class="navbar-brand">
+                    <Link :href="route('show.home')" class="navbar-brand">
                     <h3 class="text-light"><i class="fa fa-car" style="margin-right: 5px;"></i>Car Rent</h3>
                     </Link>
 

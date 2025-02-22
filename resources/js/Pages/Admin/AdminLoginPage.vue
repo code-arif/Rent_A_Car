@@ -44,7 +44,7 @@ function adminLogin() {
                 <div class="bg-white rounded p-4 p-sm-5 my-4 mx-3" style="border: 1px solid #ddd;">
                     <div class="d-flex align-items-center justify-content-between mb-3">
                         <a href="index.html" class="">
-                            <h3 style="color:#19cb00"><i class="fa fa-car" style="margin-right: 5px;"></i>DASHMIN</h3>
+                            <h3 style="color:#19cb00"><i class="fa fa-car" style="margin-right: 5px;"></i>Car Rent</h3>
                         </a>
                         <h3>Sign In</h3>
                     </div>
