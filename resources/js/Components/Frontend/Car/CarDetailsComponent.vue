@@ -1,6 +1,6 @@
 <script setup>
 import { ref } from 'vue';
-import { usePage, Head, Link, useForm, router } from '@inertiajs/vue3';
+import { usePage, Link, useForm, router } from '@inertiajs/vue3';
 const authUser = usePage().props.authCustomer.customer;
 
 const list = usePage();
@@ -67,10 +67,7 @@ const createRent = () => {
 </script>
 
 <template>
-
-
-
-        <!-- inner-apge-banner start -->
+        <!-- inner-page-banner start -->
         <section class="inner-page-banner bg_img overlay-3"
             style="background-image: url('https://images.unsplash.com/photo-1613214149922-f1809c99b414?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D');">
             <div class="container">
@@ -90,7 +87,7 @@ const createRent = () => {
                 </div>
             </div>
         </section>
-        <!-- inner-apge-banner end -->
+        <!-- inner-page-banner end -->
 
         <!-- reservation-section start -->
         <section class="reservation-section pt-120 pb-120">

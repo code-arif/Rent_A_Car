@@ -89,7 +89,7 @@ class RentalController extends Controller
                 return redirect()->back()->with($data);
             }
         } catch (Exception $e) {
-            $data = ['message' => 'Please log in to preceed', 'status' => false];
+            $data = ['message' => 'Error'. $e->getMessage(), 'status' => false];
             return redirect()->back()->with($data);
         }
     }
