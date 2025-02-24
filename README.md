@@ -36,14 +36,15 @@ A complete **Car Renting System** built using **Laravel**, **Vue.js**, and **Ine
 
 1. **Clone the Repository:**
 ```bash
-git clone https://github.com/your-username/car-renting-system.git
-cd car-renting-system
+git clone https://github.com/code-arif/Rent_A_Car.git
+cd Rent_A_Car
 ```
 
 2. **Set up Environment:**
 ```bash
 cp .env.example .env
 php artisan key:generate
+php artisan storage:link
 ```
 
 3. **Install Dependencies:**
@@ -87,14 +88,13 @@ php artisan serve
 └── database/     # Migrations
 ```
 
-## 🤝 Contributions
-
-Contributions are welcome! Feel free to submit a Pull Request or open an issue.
-
 ## 📧 Contact
 For questions or feedback, reach out to: [arifulislam6460@gmail.com](arifulislam6460@gmail.com)
 
 ---
+
+## 👍Thanks
+>"Code is not just code; it's a piece of art that solves real-world problems."
 
 **© 2025 Car Renting System: CODEARIF - Built with Laravel, Vue.js, and Inertia.js**
 
