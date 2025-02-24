@@ -7,6 +7,7 @@ use App\Models\Car;
 use Inertia\Inertia;
 use App\Models\Rental;
 use Illuminate\Http\Request;
+use App\Events\RentalCreated;
 use App\Mail\RentalCreatedForAdmin;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
@@ -74,16 +75,12 @@ class RentalController extends Controller
             // dd($validated_data);
 
             // Create Rental Record
-            $rental_create = Rental::create($validated_data);
+            $rental = Rental::create($validated_data);
 
-            $rental_create->load('user');
+            $rental->load('user'); //for user information loading
 
-            if ($rental_create) {
-                // Send Email to Admin
-                Mail::to('arifulislam6460@gmail.com')->send(new RentalCreatedForAdmin($rental_create));
-
-                // Send Email to Logged-in User
-                Mail::to(Auth::guard('customer')->user()->email)->send(new RentalCreatedForCustomer($rental_create));
+            if ($rental) {
+                event(new RentalCreated($rental)); // event triger
 
                 $data = ['message' => 'Rental created successfully', 'status' => true];
                 return redirect()->back()->with($data);
