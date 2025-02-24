@@ -1,8 +1,8 @@
 <script setup>
 import { usePage } from '@inertiajs/vue3';
 const list = usePage();
-const car_count = list.props.car_count || [];
-const customer_count = list.props.customer_count || [];
+const car_count = list.props.car_count || '0';
+const customer_count = list.props.customer_count || '0';
 </script>
 
 <template>

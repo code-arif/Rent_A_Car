@@ -3,20 +3,21 @@
 use Inertia\Inertia;
 use App\Models\Category;
 use Illuminate\Support\Facades\Route;
+use App\Http\Middleware\UserAuthMiddleware;
 use App\Http\Middleware\AdminAuthMiddleware;
 use App\Http\Controllers\Frontend\CarController;
 use App\Http\Controllers\Frontend\AuthController;
 use App\Http\Controllers\Frontend\HomeController;
+use App\Http\Controllers\Admin\CustomerController;
 use App\Http\Controllers\Frontend\AboutController;
 use App\Http\Controllers\Admin\AdminAuthController;
+use App\Http\Controllers\Admin\CarManageController;
 use App\Http\Controllers\Frontend\RentalController;
 use App\Http\Controllers\Frontend\ContactController;
-use App\Http\Controllers\Admin\AdminDashboardController;
-use App\Http\Controllers\Admin\CarManageController;
-use App\Http\Controllers\Admin\CustomerController;
 use App\Http\Controllers\Admin\RentalManageController;
+use App\Http\Controllers\Admin\AdminDashboardController;
+use App\Http\Controllers\Frontend\GoogleLoginController;
 use App\Http\Controllers\Frontend\UserDashboardController;
-use App\Http\Middleware\UserAuthMiddleware;
 
 /*================================
 Admin Route
@@ -76,6 +77,11 @@ Route::post('/user/login', [AuthController::class, 'UserLogin'])->name('user.log
 Route::get('/user/registration', [AuthController::class, 'ShowUserRegistration'])->name('show.user.registration');
 Route::post('/user/registration', [AuthController::class, 'UserRegistration'])->name('user.registration');
 Route::get('/user/logout', [AuthController::class, 'UserLogout'])->name('user.logout');
+
+//login wih google
+Route::get('/login/google',[GoogleLoginController::class,'googleRedirect'])->name('google.login');
+Route::get('/login/google/callback',[GoogleLoginController::class,'googleCallback']);
+
 
 // ===========================Home page===========================//
 Route::get('/', [HomeController::class, 'index'])->name('show.home');

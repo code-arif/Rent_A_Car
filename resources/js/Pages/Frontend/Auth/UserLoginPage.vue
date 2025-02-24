@@ -31,6 +31,11 @@ function UserLogin() {
         }
     });
 }
+
+// Google login function
+function GoogleLogin() {
+    window.location.href = route('google.login'); // Redirect to Laravel Google auth
+}
 </script>
 
 <template>
@@ -80,7 +85,7 @@ function UserLogin() {
                                         <span class="or">or</span>
                                     </div>
                                     <div class="frm-group text-center">
-                                        <a href="" class="google"> Login with googles</a>
+                                        <button @click="GoogleLogin" class="btn btn-outline-danger"> Login with Google</button>
                                     </div>
                                 </form>
                                 <p>
